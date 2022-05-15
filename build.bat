@@ -1,0 +1,1 @@
+pyuic6 -x JEMain.ui -o JEMain.py
