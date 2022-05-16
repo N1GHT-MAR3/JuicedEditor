@@ -15,14 +15,28 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         super(JEMainWindow, self).__init__()
         self.setupUi(self)
 
+        # Initializes startup text to make things easier for me in Qt Designer
+        self.InfoExeType.setText("No .exe loaded")
+        self.InfoExePath.setText("")
+        self.InfoExeSize.setText("")
+        self.InfoDecryptStatus.setText("")
+        self.InfoDecryptStatus.setStyleSheet("color: black;")
+        self.InfoServerPatchStatus.setText("")
+        self.InfoServerPatchStatus.setStyleSheet("color: black;")
+
         # Runs openExe() when File -> Open... is clicked
         self.actionOpen.triggered.connect(self.openExe)
+
+        # Runs patchServers() when Patch Servers is clicked
+        self.InfoServerPatchButton.clicked.connect(self.patchServers)
     
     # Opens Juiced.exe where specified.
     def openExe(self):
+        global exe_bytes
         global decrypted
         # Opens a file dialog asking the user to locate Juiced.exe.
         exePath = QFileDialog.getOpenFileName(self, "Open...", getcwd(), "Executable files (*.exe)")[0]
+        #exePath = QFileDialog.getOpenFileName(self, "Open...", "C:\\Users\\N1GHTMAR3\\Documents\\Programs\\Juiced Editor", "Executable files (*.exe)")[0]
         # Try to open the .exe at the path provided by the user in the file dialog.
         try:
             f = open(exePath, "rb")
@@ -39,7 +53,7 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         # If the product name "Juiced PC Game" (which can be seen in the .exe's Properties) cannot be found in the .exe, most likely, the .exe isn't a valid Juiced executable.
         if product_name_bytes not in exe_bytes:
             # If this is the case, create and display a generic error message.
-            error = QtWidgets.QMessageBox.critical(self, "Error", "Load aborted. This does not appear to be a valid Juiced .exe.")
+            QtWidgets.QMessageBox.critical(self, "Error", "Load aborted. This does not appear to be a valid Juiced .exe.")
             # Stop loading the .exe.
             return
 
@@ -106,9 +120,84 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             self.InfoDecryptStatus.setText("No")
             self.InfoDecryptStatus.setStyleSheet("color: red;")
         
+        # Checks to see if the .exe has been patched with all 9 openspy.net references.
+        # This used to check for any gamespy.com references, but has been reworked in the event that an .exe was already patched with a different domain.
+        # if b"gamespy.com" in exe_bytes:
+        openspy_bytes = b"openspy.net"
+        if exe_bytes.count(openspy_bytes) == 9:
+            # If all 9 are found, the servers must already be patched, so let them know that
+            self.InfoServerPatchStatus.setStyleSheet("color: blue;")
+            self.InfoServerPatchStatus.setText("Yes")
+            # No reason to enable the patch button since it shouldn't do anything
+            self.InfoServerPatchButton.setEnabled(False)
+        else:
+            # If there's one missing, let the user know the servers aren't patched...
+            self.InfoServerPatchStatus.setStyleSheet("color: red;")
+            self.InfoServerPatchStatus.setText("No")
+            # ...and let them patch the servers
+            self.InfoServerPatchButton.setEnabled(True)
+        
         # If the .exe type is unknown, display a warning message stating that results may vary.
         if exe_type == 0:
-            notice = QtWidgets.QMessageBox.warning(self, "Warning", ".exe type could not be determined. You may run into problems.")
+            QtWidgets.QMessageBox.warning(self, "Warning", ".exe type could not be determined. You may run into problems.")
+    
+    def patchServers(self):
+        domainsReplaced = 0
+        gamestats_index = exe_bytes.find(b"gamestats.")
+        # If the domain found isn't already openspy.net, change it
+        if exe_bytes[gamestats_index + 10:gamestats_index + 21] != b"openspy.net":
+            domainsReplaced += 1
+            exe_bytes[gamestats_index + 10:gamestats_index + 21] = b"openspy.net"
+
+        available_index = exe_bytes.find(b"%s.available.")
+        if exe_bytes[available_index + 13:available_index + 24] != b"openspy.net":
+            domainsReplaced += 1
+            exe_bytes[available_index + 13:available_index + 24] = b"openspy.net"
+
+        master_index = exe_bytes.find(b"%s.master.")
+        if exe_bytes[master_index + 10:master_index + 21] != b"openspy.net":
+            domainsReplaced += 1
+            exe_bytes[master_index + 10:master_index + 21] = b"openspy.net"
+
+        natneg2_index = exe_bytes.find(b"natneg2.")
+        if exe_bytes[natneg2_index + 8:natneg2_index + 19] != b"openspy.net":
+            domainsReplaced += 1
+            exe_bytes[natneg2_index + 8:natneg2_index + 19] = b"openspy.net"
+
+        natneg1_index = exe_bytes.find(b"natneg1.")
+        if exe_bytes[natneg1_index + 8:natneg1_index + 19] != b"openspy.net":
+            domainsReplaced += 1
+            exe_bytes[natneg1_index + 8:natneg1_index + 19] = b"openspy.net"
+
+        ms_index = exe_bytes.find(b"%s.ms%d.")
+        if exe_bytes[ms_index + 8:ms_index + 19] != b"openspy.net":
+            domainsReplaced += 1
+            exe_bytes[ms_index + 8:ms_index + 19] = b"openspy.net"
+        
+        second_gamestats_index = exe_bytes[gamestats_index + 1:].find(b"gamestats.") + gamestats_index + 1
+        if exe_bytes[second_gamestats_index + 10:second_gamestats_index + 21] != b"openspy.net":
+            domainsReplaced += 1
+            exe_bytes[second_gamestats_index + 10:second_gamestats_index + 21] = b"openspy.net"
+
+        gpsp_index = exe_bytes.find(b"gpsp.")
+        if exe_bytes[gpsp_index + 5:gpsp_index + 16] != b"openspy.net":
+            domainsReplaced += 1
+            exe_bytes[gpsp_index + 5:gpsp_index + 16] = b"openspy.net"
+
+        gpcm_index = exe_bytes.find(b"gpcm.")
+        if exe_bytes[gpcm_index + 5:gpcm_index + 16] != b"openspy.net":
+            domainsReplaced += 1
+            exe_bytes[gpcm_index + 5:gpcm_index + 16] = b"openspy.net"
+
+        # Once that's done, change the status to let the user know the operation is done...
+        self.InfoServerPatchStatus.setStyleSheet("color: blue;")
+        self.InfoServerPatchStatus.setText("Yes")
+        # ...and disable the button to prevent performing a redundant operation
+        self.InfoServerPatchButton.setEnabled(False)
+        if domainsReplaced == 1:
+            QtWidgets.QMessageBox.information(self, "Success", str(domainsReplaced) + " domain was replaced with openspy.net.\nRemember to save your changes.")
+        else:
+            QtWidgets.QMessageBox.information(self, "Success", str(domainsReplaced) + " domains were replaced with openspy.net.\nRemember to save your changes.")
 
 if __name__ == "__main__":
     import sys

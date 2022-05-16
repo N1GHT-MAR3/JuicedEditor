@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>370</width>
+    <width>500</width>
     <height>140</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>250</width>
+    <width>500</width>
     <height>140</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>370</width>
+    <width>500</width>
     <height>140</height>
    </size>
   </property>
@@ -45,46 +45,46 @@
    <widget class="QLabel" name="InfoExeType">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>10</x>
       <y>30</y>
       <width>240</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>No .exe loaded</string>
+     <string>Juiced.exe (unpatched)</string>
     </property>
    </widget>
    <widget class="QLabel" name="InfoExePath">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>10</x>
       <y>50</y>
       <width>240</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string>C:\Program Files (x86)\THQ\Juiced</string>
     </property>
    </widget>
    <widget class="QLabel" name="InfoExeSize">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>10</x>
       <y>70</y>
       <width>240</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string/>
+     <string>12,560,384 bytes</string>
     </property>
    </widget>
    <widget class="QLabel" name="InfoDecrypt">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>270</x>
       <y>30</y>
       <width>60</width>
       <height>20</height>
@@ -97,14 +97,62 @@
    <widget class="QLabel" name="InfoDecryptStatus">
     <property name="geometry">
      <rect>
-      <x>80</x>
+      <x>370</x>
       <y>30</y>
       <width>20</width>
       <height>20</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">color: blue;</string>
+    </property>
     <property name="text">
-     <string/>
+     <string>Yes</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="InfoServerPatch">
+    <property name="geometry">
+     <rect>
+      <x>270</x>
+      <y>50</y>
+      <width>90</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Servers patched:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="InfoServerPatchStatus">
+    <property name="geometry">
+     <rect>
+      <x>370</x>
+      <y>50</y>
+      <width>20</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: red;</string>
+    </property>
+    <property name="text">
+     <string>No</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="InfoServerPatchButton">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>50</y>
+      <width>90</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Patch Servers</string>
     </property>
    </widget>
   </widget>
@@ -116,7 +164,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>370</width>
+     <width>500</width>
      <height>22</height>
     </rect>
    </property>
