@@ -55,19 +55,6 @@
      <string>Juiced.exe (unpatched)</string>
     </property>
    </widget>
-   <widget class="QLabel" name="InfoExePath">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>50</y>
-      <width>240</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>C:\Program Files (x86)\THQ\Juiced</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="InfoExeSize">
     <property name="geometry">
      <rect>
@@ -153,6 +140,25 @@
     </property>
     <property name="text">
      <string>Patch Servers</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="InfoExePath">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>240</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>C:\\Program Files (x86)\\THQ\\Juiced</string>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>
