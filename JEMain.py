@@ -63,7 +63,15 @@ class Ui_JEMainWindow(object):
         JEMainWindow.setStatusBar(self.statusbar)
         self.actionOpen = QtGui.QAction(JEMainWindow)
         self.actionOpen.setObjectName("actionOpen")
+        self.actionSave = QtGui.QAction(JEMainWindow)
+        self.actionSave.setEnabled(False)
+        self.actionSave.setObjectName("actionSave")
+        self.actionSaveAs = QtGui.QAction(JEMainWindow)
+        self.actionSaveAs.setEnabled(False)
+        self.actionSaveAs.setObjectName("actionSaveAs")
         self.menuFile.addAction(self.actionOpen)
+        self.menuFile.addAction(self.actionSave)
+        self.menuFile.addAction(self.actionSaveAs)
         self.menubar.addAction(self.menuFile.menuAction())
 
         self.retranslateUi(JEMainWindow)
@@ -83,6 +91,8 @@ class Ui_JEMainWindow(object):
         self.InfoServerPatchButton.setText(_translate("JEMainWindow", "Patch Servers"))
         self.menuFile.setTitle(_translate("JEMainWindow", "File"))
         self.actionOpen.setText(_translate("JEMainWindow", "Open..."))
+        self.actionSave.setText(_translate("JEMainWindow", "Save"))
+        self.actionSaveAs.setText(_translate("JEMainWindow", "Save As..."))
 
 
 if __name__ == "__main__":

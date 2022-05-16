@@ -29,11 +29,18 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
 
         # Runs patchServers() when Patch Servers is clicked
         self.InfoServerPatchButton.clicked.connect(self.patchServers)
+
+        # Runs saveExe() when File -> Save is clicked
+        self.actionSave.triggered.connect(self.saveExe)
+
+        # Runs saveExeAs() when File -> Save As... is clicked
+        self.actionSaveAs.triggered.connect(self.saveExeAs)
     
     # Opens Juiced.exe where specified.
     def openExe(self):
         global exe_bytes
         global decrypted
+        global exePath
         # Opens a file dialog asking the user to locate Juiced.exe.
         exePath = QFileDialog.getOpenFileName(self, "Open...", getcwd(), "Executable files (*.exe)")[0]
         #exePath = QFileDialog.getOpenFileName(self, "Open...", "C:\\Users\\N1GHTMAR3\\Documents\\Programs\\Juiced Editor", "Executable files (*.exe)")[0]
@@ -137,6 +144,10 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             # ...and let them patch the servers
             self.InfoServerPatchButton.setEnabled(True)
         
+        # Allow saving the .exe.
+        self.actionSave.setEnabled(True)
+        self.actionSaveAs.setEnabled(True)
+
         # If the .exe type is unknown, display a warning message stating that results may vary.
         if exe_type == 0:
             QtWidgets.QMessageBox.warning(self, "Warning", ".exe type could not be determined. You may run into problems.")
@@ -198,6 +209,29 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             QtWidgets.QMessageBox.information(self, "Success", str(domainsReplaced) + " domain was replaced with openspy.net.\nRemember to save your changes.")
         else:
             QtWidgets.QMessageBox.information(self, "Success", str(domainsReplaced) + " domains were replaced with openspy.net.\nRemember to save your changes.")
+    
+    def saveExe(self):
+        try:
+            f = open(exePath, "wb")
+        except PermissionError:
+            QtWidgets.QMessageBox.critical(self, "Error", ".exe could not be saved to " + exePath + ". Access was denied.\nTry running as administrator, and make sure the .exe isn't read-only.")
+            return
+        f.write(exe_bytes)
+        f.close()
+
+        QtWidgets.QMessageBox.information(self, "Success", ".exe saved to " + exePath + ".")
+    
+    def saveExeAs(self):
+        exePath = QFileDialog.getSaveFileName(self, "Save as...", getcwd() + "/Juiced.exe", "Executable files (*.exe)")[0]
+        try:
+            f = open(exePath, "wb")
+        except PermissionError:
+            QtWidgets.QMessageBox.critical(self, "Error", ".exe could not be saved to " + exePath + ". Access was denied.\nTry running as administrator, and make sure the .exe isn't read-only.")
+            return
+        f.write(exe_bytes)
+        f.close()
+
+        QtWidgets.QMessageBox.information(self, "Success", ".exe saved to " + exePath + ".")
 
 if __name__ == "__main__":
     import sys
