@@ -1,5 +1,4 @@
 # Imports PyQt6 modules used to display the GUI.
-from logging import critical
 from PyQt6 import QtCore, QtGui, QtWidgets
 # Imports the main window UI files from JEMain.py.
 from JEMain import Ui_JEMainWindow
@@ -23,12 +22,17 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         self.InfoDecryptStatus.setStyleSheet("color: black;")
         self.InfoServerPatchStatus.setText("")
         self.InfoServerPatchStatus.setStyleSheet("color: black;")
+        self.expertDummyStatus.setText("")
+        self.expertDummyStatus.setStyleSheet("color: black;")
 
         # Runs openExe() when File -> Open... is clicked
         self.actionOpen.triggered.connect(self.openExe)
 
         # Runs patchServers() when Patch Servers is clicked
         self.InfoServerPatchButton.clicked.connect(self.patchServers)
+
+        # Runs patchDummy() when Patch dummyfile.dat is clicked
+        self.expertDummyButton.clicked.connect(self.patchDummy)
 
         # Runs saveExe() when File -> Save is clicked
         self.actionSave.triggered.connect(self.saveExe)
@@ -41,28 +45,30 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         global exe_bytes
         global decrypted
         global exePath
+        global locModels
         # Opens a file dialog asking the user to locate Juiced.exe.
-        exePath = QFileDialog.getOpenFileName(self, "Open...", getcwd(), "Executable files (*.exe)")[0]
+        exeTempPath = QFileDialog.getOpenFileName(self, "Open...", getcwd(), "Executable files (*.exe)")[0]
         #exePath = QFileDialog.getOpenFileName(self, "Open...", "C:\\Users\\N1GHTMAR3\\Documents\\Programs\\Juiced Editor", "Executable files (*.exe)")[0]
         # Try to open the .exe at the path provided by the user in the file dialog.
+        product_name_bytes = b"\x4A\x00\x75\x00\x69\x00\x63\x00\x65\x00\x64\x00\x20\x00\x50\x00\x43\x00\x20\x00\x47\x00\x61\x00\x6D\x00\x65"
+        
         try:
-            f = open(exePath, "rb")
+            f = open(exeTempPath, "rb")
+            exe = f.read()
+            # If the product name "Juiced PC Game" (which can be seen in the .exe's Properties) cannot be found in the .exe, most likely, the .exe isn't a valid Juiced executable.
+            if product_name_bytes not in exe:
+                # If this is the case, create and display a generic error message.
+                QtWidgets.QMessageBox.critical(self, "Error", "Load aborted. This does not appear to be a valid Juiced .exe.")
+                # Stop loading the .exe.
+                return
         # If there is no .exe path (if the user cancels the file dialog), do nothing.
         except FileNotFoundError:
             return
+        exePath = exeTempPath
         # Write all of the bytes in the .exe to an array so the editor can process them.
-        exe_bytes = bytearray(f.read())
+        exe_bytes = bytearray(exe)
         # Closes the .exe so it's not being used. Doesn't need to be until the .exe is saved anyways.
         f.close()
-
-        
-        product_name_bytes = b"\x4A\x00\x75\x00\x69\x00\x63\x00\x65\x00\x64\x00\x20\x00\x50\x00\x43\x00\x20\x00\x47\x00\x61\x00\x6D\x00\x65"
-        # If the product name "Juiced PC Game" (which can be seen in the .exe's Properties) cannot be found in the .exe, most likely, the .exe isn't a valid Juiced executable.
-        if product_name_bytes not in exe_bytes:
-            # If this is the case, create and display a generic error message.
-            QtWidgets.QMessageBox.critical(self, "Error", "Load aborted. This does not appear to be a valid Juiced .exe.")
-            # Stop loading the .exe.
-            return
 
         '''
         Detects the type of Juiced .exe:
@@ -109,6 +115,7 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         # Set the text of the .exe info label to the string.
         self.InfoExeType.setText(exeTypeStr)
         # Take the file path and cut it off before the last slash, and set that as the text of the .exe path label.
+        self.InfoExePath.setEnabled(True)
         self.InfoExePath.setText(exePath[:exePath.rindex('/')])
         # Get the length of the .exe, add comma separators to it, and set that as the text of the .exe size label.
         self.InfoExeSize.setText("{:,}".format(len(exe_bytes)) + " bytes")
@@ -144,6 +151,19 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             # ...and let them patch the servers
             self.InfoServerPatchButton.setEnabled(True)
         
+        # Find the location in the .exe where carmodels.dat would be defined using a consistent byte string that comes before it in all 4 .exes.
+        locModels = exe_bytes.index(b"\x69\x00\x00\x4A\x00\x75\x00\x69\x00\x63\x00\x65\x00\x64\x00\x00\x00\x00\x00") + 19
+        # If carmodels.dat hasn't already been patched to dummyfile.dat, inform the user of this and enable the option to patch it.
+        if exe_bytes[locModels:locModels + 13] != b"dummyfile.dat":
+            self.expertDummyStatus.setText("No")
+            self.expertDummyStatus.setStyleSheet("color: red;")
+            self.expertDummyButton.setEnabled(True)
+        # Vice versa.
+        else:
+            self.expertDummyStatus.setText("Yes")
+            self.expertDummyStatus.setStyleSheet("color: blue;")
+            self.expertDummyButton.setEnabled(False)
+        
         # Allow saving the .exe.
         self.actionSave.setEnabled(True)
         self.actionSaveAs.setEnabled(True)
@@ -152,7 +172,9 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         if exe_type == 0:
             QtWidgets.QMessageBox.warning(self, "Warning", ".exe type could not be determined. You may run into problems.")
     
+    # Redirect all of the online domains to openspy.net to restore online functionality.
     def patchServers(self):
+        # Keep track of how many domains are replaced with openspy.net for the notification message later on.
         domainsReplaced = 0
         gamestats_index = exe_bytes.find(b"gamestats.")
         # If the domain found isn't already openspy.net, change it
@@ -210,19 +232,34 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         else:
             QtWidgets.QMessageBox.information(self, "Success", str(domainsReplaced) + " domains were replaced with openspy.net.\nRemember to save your changes.")
     
+    def patchDummy(self):
+        exe_bytes[locModels:locModels + 13] = b"dummyfile.dat"
+        self.expertDummyStatus.setText("Yes")
+        self.expertDummyStatus.setStyleSheet("color: blue;")
+        self.expertDummyButton.setEnabled(False)
+        QtWidgets.QMessageBox.information(self, "Success", "dummyfile.dat has been patched in.\nRemember to save your changes.")
+    
+    # Save the .exe to the same place it was opened from.
     def saveExe(self):
         try:
             f = open(exePath, "wb")
+        # Throw an error message if the file is read-only or the user lacks permissions to save in the directory (ex. Program Files).
         except PermissionError:
             QtWidgets.QMessageBox.critical(self, "Error", ".exe could not be saved to " + exePath + ". Access was denied.\nTry running as administrator, and make sure the .exe isn't read-only.")
             return
+        # Write the .exe bytes in memory to the .exe.
         f.write(exe_bytes)
+        # Close the file.
         f.close()
 
+        # Display a success message.
         QtWidgets.QMessageBox.information(self, "Success", ".exe saved to " + exePath + ".")
     
+    # Save the .exe to a location specified by the user.
     def saveExeAs(self):
+        # Open a save file dialog asking the user where to save.
         exePath = QFileDialog.getSaveFileName(self, "Save as...", getcwd() + "/Juiced.exe", "Executable files (*.exe)")[0]
+        # See saveExe(). (Function could just call saveExe() if I can figure it out.)
         try:
             f = open(exePath, "wb")
         except PermissionError:

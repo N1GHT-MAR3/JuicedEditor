@@ -7,19 +7,19 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>140</height>
+    <height>200</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>500</width>
-    <height>140</height>
+    <height>200</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>500</width>
-    <height>140</height>
+    <height>200</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -29,137 +29,230 @@
    <property name="enabled">
     <bool>true</bool>
    </property>
-   <widget class="QLabel" name="InfoHeader">
+   <widget class="QGroupBox" name="Info">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>50</width>
-      <height>20</height>
+      <x>0</x>
+      <y>0</y>
+      <width>500</width>
+      <height>100</height>
      </rect>
     </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Info&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    <property name="title">
+     <string/>
     </property>
+    <property name="flat">
+     <bool>true</bool>
+    </property>
+    <widget class="QLabel" name="InfoHeader">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>50</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Info&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="InfoExeType">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>240</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Juiced.exe (unpatched)</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="InfoExePath">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>240</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>C:\Program Files (x86)\THQ\Juiced</string>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="InfoExeSize">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>70</y>
+       <width>240</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>12,560,384 bytes</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="InfoDecrypt">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>30</y>
+       <width>60</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Decrypted:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="InfoServerPatch">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>50</y>
+       <width>90</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Servers patched:</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="InfoServerPatchButton">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>50</y>
+       <width>90</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Patch Servers</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="InfoDecryptStatus">
+     <property name="geometry">
+      <rect>
+       <x>370</x>
+       <y>30</y>
+       <width>20</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: blue;</string>
+     </property>
+     <property name="text">
+      <string>Yes</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="InfoServerPatchStatus">
+     <property name="geometry">
+      <rect>
+       <x>370</x>
+       <y>50</y>
+       <width>20</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: red;</string>
+     </property>
+     <property name="text">
+      <string>No</string>
+     </property>
+    </widget>
    </widget>
-   <widget class="QLabel" name="InfoExeType">
+   <widget class="QGroupBox" name="expert">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>30</y>
-      <width>240</width>
-      <height>20</height>
+      <x>0</x>
+      <y>100</y>
+      <width>500</width>
+      <height>60</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Juiced.exe (unpatched)</string>
+    <property name="title">
+     <string/>
     </property>
-   </widget>
-   <widget class="QLabel" name="InfoExeSize">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>70</y>
-      <width>240</width>
-      <height>20</height>
-     </rect>
+    <property name="flat">
+     <bool>true</bool>
     </property>
-    <property name="text">
-     <string>12,560,384 bytes</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="InfoDecrypt">
-    <property name="geometry">
-     <rect>
-      <x>270</x>
-      <y>30</y>
-      <width>60</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Decrypted:</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="InfoDecryptStatus">
-    <property name="geometry">
-     <rect>
-      <x>370</x>
-      <y>30</y>
-      <width>20</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: blue;</string>
-    </property>
-    <property name="text">
-     <string>Yes</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="InfoServerPatch">
-    <property name="geometry">
-     <rect>
-      <x>270</x>
-      <y>50</y>
-      <width>90</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Servers patched:</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="InfoServerPatchStatus">
-    <property name="geometry">
-     <rect>
-      <x>370</x>
-      <y>50</y>
-      <width>20</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">color: red;</string>
-    </property>
-    <property name="text">
-     <string>No</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="InfoServerPatchButton">
-    <property name="enabled">
+    <property name="checkable">
      <bool>false</bool>
     </property>
-    <property name="geometry">
-     <rect>
-      <x>400</x>
-      <y>50</y>
-      <width>90</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Patch Servers</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="InfoExePath">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>50</y>
-      <width>240</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>C:\\Program Files (x86)\\THQ\\Juiced</string>
-    </property>
-    <property name="readOnly">
-     <bool>true</bool>
-    </property>
+    <widget class="QLabel" name="expertHeader">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>110</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;ONLY FOR EXPERTS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="expertDummy">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>30</y>
+       <width>90</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>dummyfile.dat:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="expertDummyStatus">
+     <property name="geometry">
+      <rect>
+       <x>110</x>
+       <y>30</y>
+       <width>20</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: red;</string>
+     </property>
+     <property name="text">
+      <string>No</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="expertDummyButton">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>140</x>
+       <y>30</y>
+       <width>120</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Patch dummyfile.dat</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
