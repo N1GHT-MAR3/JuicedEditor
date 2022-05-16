@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>250</width>
+    <width>370</width>
     <height>140</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>250</width>
+    <width>370</width>
     <height>140</height>
    </size>
   </property>
@@ -45,7 +45,7 @@
    <widget class="QLabel" name="InfoExeType">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>120</x>
       <y>30</y>
       <width>240</width>
       <height>20</height>
@@ -58,7 +58,7 @@
    <widget class="QLabel" name="InfoExePath">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>120</x>
       <y>50</y>
       <width>240</width>
       <height>20</height>
@@ -71,9 +71,35 @@
    <widget class="QLabel" name="InfoExeSize">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>120</x>
       <y>70</y>
       <width>240</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="InfoDecrypt">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>60</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Decrypted:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="InfoDecryptStatus">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>30</y>
+      <width>20</width>
       <height>20</height>
      </rect>
     </property>
@@ -90,7 +116,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>250</width>
+     <width>370</width>
      <height>22</height>
     </rect>
    </property>

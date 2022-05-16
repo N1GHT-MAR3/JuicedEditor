@@ -20,6 +20,7 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
     
     # Opens Juiced.exe where specified.
     def openExe(self):
+        global decrypted
         # Opens a file dialog asking the user to locate Juiced.exe.
         exePath = QFileDialog.getOpenFileName(self, "Open...", getcwd(), "Executable files (*.exe)")[0]
         # Try to open the .exe at the path provided by the user in the file dialog.
@@ -90,6 +91,21 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         self.InfoExePath.setText(exePath[:exePath.rindex('/')])
         # Get the length of the .exe, add comma separators to it, and set that as the text of the .exe size label.
         self.InfoExeSize.setText("{:,}".format(len(exe_bytes)) + " bytes")
+
+        # Checks for a certain string of bytes that only appears in decrypted .exes.
+        if b"\x2C\xC2\x04\x00\xC7\x47\x0C" in exe_bytes:
+            decrypted = True
+        else:
+            decrypted = False
+        
+        # Updates the GUI with the decryption status.
+        if decrypted:
+            self.InfoDecryptStatus.setText("Yes")
+            self.InfoDecryptStatus.setStyleSheet("color: blue;")
+        else:
+            self.InfoDecryptStatus.setText("No")
+            self.InfoDecryptStatus.setStyleSheet("color: red;")
+        
         # If the .exe type is unknown, display a warning message stating that results may vary.
         if exe_type == 0:
             notice = QtWidgets.QMessageBox.warning(self, "Warning", ".exe type could not be determined. You may run into problems.")
