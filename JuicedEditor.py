@@ -6,6 +6,8 @@ from JEMain import Ui_JEMainWindow
 from PyQt6.QtWidgets import QFileDialog
 # Imports a function used to get a Windows directory.
 from os import getcwd
+# Imports functions required to convert bytes to and from floats.
+import struct
 
 
 # Sets up the main window UI.
@@ -60,6 +62,7 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         global exe_type
         global locCheats
         global locDOSH
+        global locRESP
         global locModels
         # Opens a file dialog asking the user to locate Juiced.exe.
         exeTempPath = QFileDialog.getOpenFileName(self, "Open...", getcwd(), "Executable files (*.exe)")[0]
@@ -186,6 +189,7 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         
         if decrypted:
             locDOSH = exe_bytes.index(b"\x2C\xC2\x04\x00\xC7\x47\x0C") + 7
+            locRESP = exe_bytes.index(b"\x01\x00\x8B\x13\x68") + 5
         
         # Allow all 8 of the codes to be toggled on or off by the user.
         self.cheatPINTCheckbox.setEnabled(True)
@@ -247,6 +251,9 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             self.cheatRESP2.setEnabled(True)
             self.cheatRESP3.setEnabled(True)
             self.cheatRESP4.setEnabled(True)
+            if decrypted:
+                self.cheatRESPValue.setValue(int(struct.unpack('f', exe_bytes[locRESP:locRESP + 4])[0]))
+                self.cheatRESPValue.setEnabled(True)
             self.cheatRESPCheckbox.setChecked(True)
         else:
             # If the cheat is disabled, deny access to the combo boxes unless the cheat is enabled by the user
@@ -254,6 +261,7 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             self.cheatRESP2.setEnabled(False)
             self.cheatRESP3.setEnabled(False)
             self.cheatRESP4.setEnabled(False)
+            self.cheatRESPValue.setEnabled(False)
             self.cheatRESPCheckbox.setChecked(False)
         
         if exe_bytes[locCheats + 12] != 139:
@@ -461,11 +469,14 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             self.cheatRESP2.setEnabled(True)
             self.cheatRESP3.setEnabled(True)
             self.cheatRESP4.setEnabled(True)
+            if decrypted:
+                self.cheatRESPValue.setEnabled(True)
         else:
             self.cheatRESP1.setEnabled(False)
             self.cheatRESP2.setEnabled(False)
             self.cheatRESP3.setEnabled(False)
             self.cheatRESP4.setEnabled(False)
+            self.cheatRESPValue.setEnabled(False)
     
     def toggleCARS(self):
         if self.cheatCARSCheckbox.isChecked():
@@ -572,6 +583,8 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             exe_bytes[locCheats + 9] = self.convCodeBack(self.cheatRESP2.currentIndex())
             exe_bytes[locCheats + 10] = self.convCodeBack(self.cheatRESP3.currentIndex())
             exe_bytes[locCheats + 11] = self.convCodeBack(self.cheatRESP4.currentIndex())
+            if decrypted:
+                exe_bytes[locRESP:locRESP + 4] = struct.pack('f', float(self.cheatRESPValue.value()))
         else:
             # If it's set to be disabled, just do what Juiced does and set the first letter to 1, which is normally impossible to input
             exe_bytes[locCheats + 8] = 139
