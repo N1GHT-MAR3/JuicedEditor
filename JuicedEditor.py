@@ -59,6 +59,7 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         global exePath
         global exe_type
         global locCheats
+        global locDOSH
         global locModels
         # Opens a file dialog asking the user to locate Juiced.exe.
         exeTempPath = QFileDialog.getOpenFileName(self, "Open...", getcwd(), "Executable files (*.exe)")[0]
@@ -183,6 +184,9 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
                 '''
                 return int(exe_bytes[locCheats + offset] - 155)
         
+        if decrypted:
+            locDOSH = exe_bytes.index(b"\x2C\xC2\x04\x00\xC7\x47\x0C") + 7
+        
         # Allow all 8 of the codes to be toggled on or off by the user.
         self.cheatPINTCheckbox.setEnabled(True)
         self.cheatDOSHCheckbox.setEnabled(True)
@@ -222,12 +226,16 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             self.cheatDOSH2.setEnabled(True)
             self.cheatDOSH3.setEnabled(True)
             self.cheatDOSH4.setEnabled(True)
+            if decrypted:
+                self.cheatDOSHValue.setValue(int.from_bytes(exe_bytes[locDOSH:locDOSH + 4], "little"))
+                self.cheatDOSHValue.setEnabled(True)
             self.cheatDOSHCheckbox.setChecked(True)
         else:
             self.cheatDOSH1.setEnabled(False)
             self.cheatDOSH2.setEnabled(False)
             self.cheatDOSH3.setEnabled(False)
             self.cheatDOSH4.setEnabled(False)
+            self.cheatDOSHValue.setEnabled(False)
             self.cheatDOSHCheckbox.setChecked(False)
         
         if exe_bytes[locCheats + 8] != 139:
@@ -438,11 +446,14 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             self.cheatDOSH2.setEnabled(True)
             self.cheatDOSH3.setEnabled(True)
             self.cheatDOSH4.setEnabled(True)
+            if decrypted:
+                self.cheatDOSHValue.setEnabled(True)
         else:
             self.cheatDOSH1.setEnabled(False)
             self.cheatDOSH2.setEnabled(False)
             self.cheatDOSH3.setEnabled(False)
             self.cheatDOSH4.setEnabled(False)
+            self.cheatDOSHValue.setEnabled(False)
     
     def toggleRESP(self):
         if self.cheatRESPCheckbox.isChecked():
@@ -549,6 +560,8 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             exe_bytes[locCheats + 5] = self.convCodeBack(self.cheatDOSH2.currentIndex())
             exe_bytes[locCheats + 6] = self.convCodeBack(self.cheatDOSH3.currentIndex())
             exe_bytes[locCheats + 7] = self.convCodeBack(self.cheatDOSH4.currentIndex())
+            if decrypted:
+                exe_bytes[locDOSH:locDOSH + 4] = int.to_bytes(self.cheatDOSHValue.value(), 4, "little")
         else:
             # If it's set to be disabled, just do what Juiced does and set the first letter to 1, which is normally impossible to input
             exe_bytes[locCheats + 4] = 139
