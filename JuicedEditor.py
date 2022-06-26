@@ -374,6 +374,10 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         # If the .exe type is unknown, display a warning message stating that results may vary.
         if exe_type == 0:
             QtWidgets.QMessageBox.warning(self, "Warning", ".exe type could not be determined. You may run into problems.")
+        
+        # If the .exe is encrypted, display a warning message stating that certain features will be unavailable.
+        if not decrypted:
+            QtWidgets.QMessageBox.warning(self, "Warning", "This .exe is encrypted. Some options will be unavailable.")
     
     # Redirect all of the online domains to openspy.net to restore online functionality.
     def patchServers(self):
