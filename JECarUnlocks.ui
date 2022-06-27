@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>JECarUnlocksDialog</class>
+ <widget class="QDialog" name="JECarUnlocksDialog">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>417</width>
+    <height>670</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>417</width>
+    <height>670</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>417</width>
+    <height>670</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Car Unlocks</string>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
+  <widget class="QTableWidget" name="carUnlocksTable">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>397</width>
+     <height>650</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>397</width>
+     <height>650</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>397</width>
+     <height>650</height>
+    </size>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Plain</enum>
+   </property>
+   <property name="verticalScrollBarPolicy">
+    <enum>Qt::ScrollBarAsNeeded</enum>
+   </property>
+   <property name="horizontalScrollBarPolicy">
+    <enum>Qt::ScrollBarAlwaysOff</enum>
+   </property>
+   <property name="autoScrollMargin">
+    <number>24</number>
+   </property>
+   <property name="alternatingRowColors">
+    <bool>false</bool>
+   </property>
+   <property name="selectionMode">
+    <enum>QAbstractItemView::NoSelection</enum>
+   </property>
+   <attribute name="horizontalHeaderMinimumSectionSize">
+    <number>96</number>
+   </attribute>
+   <attribute name="horizontalHeaderDefaultSectionSize">
+    <number>96</number>
+   </attribute>
+   <attribute name="horizontalHeaderHighlightSections">
+    <bool>false</bool>
+   </attribute>
+   <attribute name="verticalHeaderVisible">
+    <bool>true</bool>
+   </attribute>
+   <attribute name="verticalHeaderDefaultSectionSize">
+    <number>24</number>
+   </attribute>
+   <attribute name="verticalHeaderHighlightSections">
+    <bool>false</bool>
+   </attribute>
+   <row>
+    <property name="text">
+     <string>Acura Integra Type R</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Acura NSX</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Acura RSX Type-S</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Chevrolet Camaro</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Chevrolet Camaro Z28</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Chevrolet Corvette</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Chevrolet Corvette Z06</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Dodge 1969 Charger R/T</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Dodge Neon R/T</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Dodge SRT-4</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Dodge Viper GTS</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Fiat Punto 1.8 HGT</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Ford 2003 Focus SVT</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Ford 2004 Focus ZTS</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Ford 67 Mustang</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Ford Falcon XR8</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Ford Mustang GT 99</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Holden Monaro CV8</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Honda Civic DX</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Honda Civic Type R</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Honda CR-X</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Honda Integra Type R '99</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Honda Integra Type R '02</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Honda NSX</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Honda Prelude VT</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Honda S2000</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Mazda MX-5</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Mazda RX-7</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Mazda RX-8</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Mitsubishi 3000GT</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Mitsubishi Eclipse GSX</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Mitsubishi FTO</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Mitsubishi Lancer Evolution VI</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Mitsubishi Lancer Evolution VIII</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Nissan 300Z</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Nissan 350Z</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Nissan Skyline GT-R</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Peugeot 206 GTI</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Pontiac Firebird</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Renault Clio Sport 2.0 16V</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Subaru Impreza 22B STi</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Subaru Impreza WRX STi</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Toyota Celica SS-I</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Toyota Celica SS-II</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Toyota Corolla 1.6</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Toyota MR2</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Toyota MR-S</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Toyota Supra</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Vauxhall Corsa Sri 1.8i 16V</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Volkswagen Beetle GLS 1.8T</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Volkswagen Corrado VR6</string>
+    </property>
+   </row>
+   <row>
+    <property name="text">
+     <string>Volkswagen Golf MkIV</string>
+    </property>
+   </row>
+   <column>
+    <property name="text">
+     <string>Tier</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>Unlock</string>
+    </property>
+   </column>
+   <item row="0" column="1">
+    <property name="text">
+     <string/>
+    </property>
+   </item>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

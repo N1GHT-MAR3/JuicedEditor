@@ -2,6 +2,8 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 # Imports the main window UI files from JEMain.py.
 from JEMain import Ui_JEMainWindow
+# Imports the car unlock dialog UI files from JECarUnlocks.py.
+from JECarUnlocks import Ui_JECarUnlocksDialog
 # Imports the file dialog seen when opening a file.
 from PyQt6.QtWidgets import QFileDialog
 # Imports a function used to get a Windows directory.
@@ -45,6 +47,9 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         self.cheatWINCheckbox.stateChanged.connect(self.toggleWIN)
         self.cheatALLCheckbox.stateChanged.connect(self.toggleALL)
 
+        # Runs showCarUnlocks() when "Car Unlocks..." is clicked
+        self.modsCarUnlockButton.clicked.connect(self.showCarUnlocks)
+
         # Runs patchDummy() when Patch dummyfile.dat is clicked
         self.expertDummyButton.clicked.connect(self.patchDummy)
 
@@ -63,7 +68,10 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         global locCheats
         global locDOSH
         global locRESP
+        global locCarUnlocks
+        global carUnlocks
         global locModels
+        global indexDict
         # Opens a file dialog asking the user to locate Juiced.exe.
         exeTempPath = QFileDialog.getOpenFileName(self, "Open...", getcwd(), "Executable files (*.exe)")[0]
         #exePath = QFileDialog.getOpenFileName(self, "Open...", "C:\\Users\\N1GHTMAR3\\Documents\\Programs\\Juiced Editor", "Executable files (*.exe)")[0]
@@ -354,6 +362,78 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             self.cheatALL4.setEnabled(False)
             self.cheatALLCheckbox.setChecked(False)
         
+        try:
+            locCarUnlocks = exe_bytes.index(b"\x48\x3C\x6F\x00\x00\x00\x00\x00\x00\x00\x00\x00") + 12
+        # Patched .exe has a different instruction preceding the car unlock data.
+        except ValueError:
+            locCarUnlocks = exe_bytes.index(b"\x80\x6C\x6F\x00\x00\x00\x00\x00\x00\x00\x00\x00") + 12
+        self.modsCarUnlockButton.setEnabled(True)
+
+        indexDict = {
+            0  : 47, # Acura Integra Type R             ; index 47
+            1  : 48, # Acura NSX                        ; index 48
+            2  : 46, # Acura RSX Type-S                 ; index 46
+            3  : 38, # Chevrolet Camaro                 ; index 38
+            4  : 44, # Chevrolet Camaro Z28             ; index 44
+            5  : 42, # Chevrolet Corvette               ; index 42
+            6  : 12, # Chevrolet Corvete Z06            ; index 12
+            7  : 39, # Dodge 1969 Charger R/T           ; index 39
+            8  : 25, # Dodge Neon R/T                   ; index 25
+            9  : 41, # Dodge SRT-4                      ; index 41
+            10 : 13, # Dodge Viper GTS                  ; index 13
+            11 : 15, # Fiat Punto 1.8 HGT               ; index 15
+            12 : 4,  # Ford 2003 Focus SVT              ; index 4
+            13 : 51, # Ford 2004 Focus ZTS              ; index 51
+            14 : 24, # Ford 67 Mustang                  ; index 24
+            15 : 45, # Ford Falcon XR8                  ; index 45
+            16 : 37, # Ford Mustang 99 GT               ; index 37
+            17 : 26, # Holden Monaro CV8                ; index 26
+            18 : 23, # Honda Civic DX                   ; index 23
+            19 : 1,  # Honda Civic Type R               ; index 1
+            20 : 3,  # Honda CR-X                       ; index 3
+            21 : 21, # Honda Integra Type R '99         ; index 21
+            22 : 36, # Honda Integra Type R '02         ; index 36
+            23 : 8,  # Honda NSX                        ; index 8
+            24 : 32, # Honda Prelude VT                 ; index 32
+            25 : 19, # Honda S2000                      ; index 19
+            26 : 22, # Mazda MX-5                       ; index 22
+            27 : 10, # Mazda RX-7                       ; index 10
+            28 : 49, # Mazda RX8                        ; index 49
+            29 : 35, # Mitsubishi 3000GT                ; index 35
+            30 : 18, # Mitsubishi Eclipse GSX           ; index 18
+            31 : 28, # Mitsubishi FTO                   ; index 28
+            32 : 31, # Mitsubishi Lancer Evolution VI   ; index 31
+            33 : 5,  # Mitsubishi Lancer Evolution VIII ; index 5
+            34 : 33, # Nissan 300Z                      ; index 33
+            35 : 34, # Nissan 350Z                      ; index 34
+            36 : 6,  # Nissan Skyline GT-R              ; index 6
+            37 : 9,  # Peugeot 206 GTI                  ; index 9
+            38 : 11, # Pontiac Firebird                 ; index 11
+            39 : 2,  # Renault Clio Sport 2.0 16V       ; index 2
+            40 : 7,  # Subaru Impreza 22B STi           ; index 7
+            41 : 27, # Subaru Impreza WRX STi           ; index 27
+            42 : 0,  # Toyota Celica SS-I               ; index 0
+            43 : 29, # Toyota Celica SS-II              ; index 29
+            44 : 40, # Toyota Corolla 1.6               ; index 40
+            45 : 30, # Toyota MR2                       ; index 30
+            46 : 43, # Toyota MR-S                      ; index 43
+            47 : 20, # Toyota Supra                     ; index 20
+            48 : 17, # Vauxhall Corsa Sri 1.8i 16V      ; index 17
+            49 : 50, # Volkswagen Beetle GLS 1.8T       ; index 50
+            50 : 14, # Volkswagen Corrado VR6           ; index 14
+            51 : 16  # Volkswagen Golf MkIV             ; index 16
+        }
+        carUnlocks = []
+        for i in range(52):
+            carUnlocks.append(int.from_bytes(exe_bytes[locCarUnlocks + (4 * i):locCarUnlocks + (4 * i) + 4], "little"))
+        for i in range(52):
+            JECU.carUnlocksTable.cellWidget(i, 0).setValue(carUnlocks[indexDict[i]])
+            if JECU.carUnlocksTable.cellWidget(i, 0).value() == 0:
+                JECU.carUnlocksTable.cellWidget(i, 1).setText("Start")
+            else:
+                JECU.carUnlocksTable.cellWidget(i, 1).setText(str(JECU.carUnlocksTable.cellWidget(i, 0).value() * 3) + " races")
+        
+        
         # Find the location in the .exe where carmodels.dat would be defined using a consistent byte string that comes before it in all 4 .exes.
         locModels = exe_bytes.index(b"\x69\x00\x00\x4A\x00\x75\x00\x69\x00\x63\x00\x65\x00\x64\x00\x00\x00\x00\x00") + 19
         # If carmodels.dat hasn't already been patched to dummyfile.dat, inform the user of this and enable the option to patch it.
@@ -542,6 +622,9 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             self.cheatALL3.setEnabled(False)
             self.cheatALL4.setEnabled(False)
     
+    def showCarUnlocks(self):
+        JECU.show()
+
     # Patches dummyfile.dat over carmodels.dat.
     def patchDummy(self):
         exe_bytes[locModels:locModels + 13] = b"dummyfile.dat"
@@ -643,6 +726,10 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             # If it's set to be disabled, just do what Juiced does and set the first letter to 1, which is normally impossible to input
             exe_bytes[locCheats + 28] = 139
         
+        # Rewrite the car unlocks based on what's set in the respective menu.
+        for i in range(52):
+            exe_bytes[locCarUnlocks + (indexDict[i] * 4):locCarUnlocks + (indexDict[i] * 4) + 4] = int.to_bytes(JECU.carUnlocksTable.cellWidget(i, 0).value(), 4, "little")
+        
         try:
             f = open(exePath, "wb")
         # Throw an error message if the file is read-only or the user lacks permissions to save in the directory (ex. Program Files).
@@ -689,9 +776,97 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             exePath = exeTempPath
         self.saveExe()
 
+class JECarUnlocksDialog(QtWidgets.QDialog, Ui_JECarUnlocksDialog):
+    def __init__(self):
+        super(JECarUnlocksDialog, self).__init__()
+        self.setupUi(self)
+
+        for i in range(self.carUnlocksTable.rowCount()):
+            # Make each first item in a row a spin box to determine what unlock tier a car is in.
+            self.carUnlocksTable.setCellWidget(i, 0, QtWidgets.QSpinBox())
+            # Prevent tiers from going into the negatives.
+            self.carUnlocksTable.cellWidget(i, 0).setMinimum(0)
+            # 715,827,882 * 3 = 2,147,483,646 races; the highest %3 value you can reach in a signed 4-byte int.
+            # Theoretically the tiers can go all the way up to 2,147,483,647 (or higher depending on if it's actually signed) - but that could cause an overflow when calculating the races required.
+            # Nobody's gonna want to go this high anyways.
+            self.carUnlocksTable.cellWidget(i, 0).setMaximum(715827882)
+            # Set the second item in a row to a read-only line edit as a user-friendly way of determining # of races required.
+            # To be honest, I don't remember why I'm setting them to QLineEdits instead of just editing the fields directly, but fuck it. It works.
+            self.carUnlocksTable.setCellWidget(i, 1, QtWidgets.QLineEdit())
+            self.carUnlocksTable.cellWidget(i, 1).setReadOnly(True)
+        
+        # Monitor each spin box to update the # races line edit whenever the spin box is changed.
+        # Yes, this is terribly inefficient. No, I could not figure out a better way of doing this. Should note for the future though - there HAS to be a better way.
+        self.carUnlocksTable.cellWidget(0, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(1, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(2, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(3, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(4, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(5, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(6, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(7, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(8, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(9, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(10, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(11, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(12, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(13, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(14, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(15, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(16, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(17, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(18, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(19, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(20, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(21, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(22, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(23, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(24, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(25, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(26, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(27, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(28, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(29, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(30, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(31, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(32, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(33, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(34, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(35, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(36, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(37, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(38, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(39, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(40, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(41, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(42, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(43, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(44, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(45, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(46, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(47, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(48, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(49, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(50, 0).valueChanged.connect(self.updateRaces)
+        self.carUnlocksTable.cellWidget(51, 0).valueChanged.connect(self.updateRaces)
+    
+    # Refresh text to determine how many races an unlock tier requires.
+    def updateRaces(self):
+        # Since children in a table widget don't know their index in said table, use this workaround to find that out.
+        # Credit to ekhumoro on StackOverflow. (https://stackoverflow.com/questions/39814304/pyqt5-get-index-of-cell-widgets-and-their-chosen-values)
+        line = self.carUnlocksTable.cellWidget(self.carUnlocksTable.indexAt(self.sender().pos()).row(), 1)
+        # If unlock tier == 0, the car will be available at the start.
+        if self.sender().value() == 0:
+            line.setText("Start")
+        # Otherwise, # races required is just the tier times three.
+        else:
+            line.setText(str(self.sender().value() * 3) + " races")
+
+
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     JE = JEMainWindow()
+    JECU = JECarUnlocksDialog()
     JE.show()
     sys.exit(app.exec())
