@@ -7,9 +7,11 @@ from JECarUnlocks import Ui_JECarUnlocksDialog
 # Imports the file dialog seen when opening a file.
 from PyQt6.QtWidgets import QFileDialog
 # Imports a function used to get a Windows directory.
-from os import getcwd
+from os import getcwd, path
 # Imports functions required to convert bytes to and from floats.
 import struct
+# Imports functions allowing the editor to open links.
+import webbrowser
 
 
 # Sets up the main window UI.
@@ -17,6 +19,12 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
     def __init__(self):
         super(JEMainWindow, self).__init__()
         self.setupUi(self)
+
+        # Move the Discord and GitHub buttons to the menu bar here, since you can't do that in Qt Designer for some reason.
+        self.actionDiscord.setParent(self.menubar)
+        self.actionDiscord.move(460, 1)
+        self.actionGitHub.setParent(self.menubar)
+        self.actionGitHub.move(480, 1)
 
         # Initializes startup text to make things easier for me in Qt Designer
         self.InfoExeType.setText("No .exe loaded")
@@ -33,6 +41,12 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
 
         # Runs openExe() when File -> Open... is clicked
         self.actionOpen.triggered.connect(self.openExe)
+
+        # Runs openDiscord() when the Discord button is clicked
+        self.actionDiscord.clicked.connect(self.openDiscord)
+
+        # Runs openGitHub() when the GitHub button is clicked
+        self.actionGitHub.clicked.connect(self.openGitHub)
 
         # Runs patchServers() when Patch Servers is clicked
         self.InfoServerPatchButton.clicked.connect(self.patchServers)
@@ -59,6 +73,14 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         # Runs saveExeAs() when File -> Save As... is clicked
         self.actionSaveAs.triggered.connect(self.saveExeAs)
     
+    # Links to the Juiced Modding Discord server.
+    def openDiscord(self):
+        webbrowser.open("https://discord.gg/pu2jdxR")
+    
+    # Links to the Juiced Editor GitHub page.
+    def openGitHub(self):
+        webbrowser.open("https://github.com/N1GHT-MAR3/JuicedEditor")
+
     # Opens Juiced.exe where specified.
     def openExe(self):
         global exe_bytes
