@@ -1,3 +1,15 @@
+# Allows images to properly display while running as an .exe.
+# Big thanks and all credit to max on StackOverflow for this. (https://stackoverflow.com/a/13790741)
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = path.abspath(".")
+
+    return path.join(base_path, relative_path)
+
 # Imports PyQt6 modules used to display the GUI.
 from PyQt6 import QtCore, QtGui, QtWidgets
 # Imports the main window UI files from JEMain.py.
@@ -20,6 +32,19 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         super(JEMainWindow, self).__init__()
         self.setupUi(self)
 
+        # Sets up the Juiced icon.
+        global juicedIcon
+        juicedIcon = QtGui.QIcon()
+        juicedIcon.addPixmap(QtGui.QPixmap(resource_path("./Juiced_32px.png")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.setWindowIcon(juicedIcon)
+        # Sets up the Discord icon.
+        discordIcon = QtGui.QIcon()
+        discordIcon.addPixmap(QtGui.QPixmap(resource_path("./Discord_16px.png")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.actionDiscord.setIcon(discordIcon)
+        # Sets up the GitHub icon.
+        gitHubIcon = QtGui.QIcon()
+        gitHubIcon.addPixmap(QtGui.QPixmap(resource_path("./GitHub_16px.png")), QtGui.QIcon.Mode.Normal, QtGui.QIcon.State.Off)
+        self.actionGitHub.setIcon(gitHubIcon)
         # Move the Discord and GitHub buttons to the menu bar here, since you can't do that in Qt Designer for some reason.
         self.actionDiscord.setParent(self.menubar)
         self.actionDiscord.move(460, 1)
@@ -802,6 +827,8 @@ class JECarUnlocksDialog(QtWidgets.QDialog, Ui_JECarUnlocksDialog):
     def __init__(self):
         super(JECarUnlocksDialog, self).__init__()
         self.setupUi(self)
+
+        self.setWindowIcon(juicedIcon)
 
         for i in range(self.carUnlocksTable.rowCount()):
             # Make each first item in a row a spin box to determine what unlock tier a car is in.

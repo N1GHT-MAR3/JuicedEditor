@@ -19,11 +19,27 @@
   <property name="maximumSize">
    <size>
     <width>500</width>
-    <height>460</height>
+    <height>500</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Juiced Editor</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>Juiced_32px.png</normaloff>Juiced_32px.png</iconset>
+  </property>
+  <property name="iconSize">
+   <size>
+    <width>24</width>
+    <height>24</height>
+   </size>
+  </property>
+  <property name="documentMode">
+   <bool>false</bool>
+  </property>
+  <property name="unifiedTitleAndToolBarOnMac">
+   <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="enabled">
@@ -174,6 +190,46 @@
      </property>
      <property name="text">
       <string>No</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="actionGitHub">
+     <property name="geometry">
+      <rect>
+       <x>480</x>
+       <y>0</y>
+       <width>20</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../../../Pictures/Icons/GitHub_16px.png</normaloff>../../../Pictures/Icons/GitHub_16px.png</iconset>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="actionDiscord">
+     <property name="geometry">
+      <rect>
+       <x>460</x>
+       <y>0</y>
+       <width>20</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>../../../Pictures/Icons/Discord_16px.png</normaloff>../../../Pictures/Icons/Discord_16px.png</iconset>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
      </property>
     </widget>
    </widget>
@@ -5694,11 +5750,21 @@
     <addaction name="actionSave"/>
     <addaction name="actionSaveAs"/>
    </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionAbout"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar">
    <property name="enabled">
     <bool>false</bool>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
    </property>
    <property name="sizeGripEnabled">
     <bool>false</bool>
@@ -5725,7 +5791,14 @@
     <string>Save As...</string>
    </property>
   </action>
+  <action name="actionAbout">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

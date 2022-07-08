@@ -34,6 +34,10 @@
   <property name="windowTitle">
    <string>Car Unlocks</string>
   </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>Juiced_32px.png</normaloff>Juiced_32px.png</iconset>
+  </property>
   <property name="modal">
    <bool>true</bool>
   </property>
