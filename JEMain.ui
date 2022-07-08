@@ -127,6 +127,9 @@
        <height>20</height>
       </rect>
      </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Whether or not the game's code is decrypted. Some options are only available with decrypted executables.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
      <property name="text">
       <string>Decrypted:</string>
      </property>
@@ -139,6 +142,9 @@
        <width>90</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Whether or not the OpenSpy servers have been patched in. This allows for online functionality to be restored.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="text">
       <string>Servers patched:</string>
@@ -273,6 +279,9 @@
        <height>20</height>
       </rect>
      </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Changes the reference to carmodels.dat in the executable to dummyfile.dat, allowing the game to run with carmodels.dat unpacked.&lt;/p&gt;&lt;p&gt;If you don't know what this does, do not apply this patch.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
      <property name="text">
       <string>dummyfile.dat:</string>
      </property>
@@ -347,6 +356,9 @@
        <height>20</height>
       </rect>
      </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Unlocks all Arcade races, and all cars/tracks in Custom Race, except for prototype cars.&lt;/p&gt;&lt;p&gt;Default code is PINT (or PING in certain versions.)&lt;/p&gt;&lt;p&gt;Enabled by default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
      <property name="text">
       <string>All arcade/custom unlocks</string>
      </property>
@@ -359,6 +371,9 @@
        <width>145</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sets your cash in Career mode to a specified amount ($10,000,000 by default).&lt;/p&gt;&lt;p&gt;Default code is DOSH.&lt;/p&gt;&lt;p&gt;Disabled by default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="text">
       <string>Money</string>
@@ -373,6 +388,9 @@
        <height>20</height>
       </rect>
      </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sets your respect with all crew members to the specified amount (2000 by default), and unlocks all corresponding privileges.&lt;/p&gt;&lt;p&gt;Default code is RESP.&lt;/p&gt;&lt;p&gt;Disabled by default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
      <property name="text">
       <string>Respect</string>
      </property>
@@ -385,6 +403,9 @@
        <width>145</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Unlocks all cars in the dealership at the turn of the month, all upgrades, and adds one of every car to your garage.&lt;/p&gt;&lt;p&gt;Default code is CARS.&lt;/p&gt;&lt;p&gt;Disabled by default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="text">
       <string>Unlock all cars/upgrades</string>
@@ -399,6 +420,9 @@
        <height>20</height>
       </rect>
      </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Adds Vito, Amber, and Chief to your crew.&lt;/p&gt;&lt;p&gt;Default code is CREW.&lt;/p&gt;&lt;p&gt;Disabled by default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
      <property name="text">
       <string>Unlock all crew members</string>
      </property>
@@ -412,6 +436,9 @@
        <height>20</height>
       </rect>
      </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;You are scored as the winner of all races, regardless of race results, until the game is restarted.&lt;/p&gt;&lt;p&gt;Does not work online.&lt;/p&gt;&lt;p&gt;Default code is WIN.&lt;/p&gt;&lt;p&gt;Disabled by default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
      <property name="text">
       <string>Win all (most) races</string>
      </property>
@@ -424,6 +451,9 @@
        <width>145</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activates PINT, DOSH, RESP, CARS, and CREW.&lt;/p&gt;&lt;p&gt;Does not activate CHAR or WIN.&lt;/p&gt;&lt;p&gt;Default code is ALL.&lt;/p&gt;&lt;p&gt;Disabled by default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="text">
       <string>Activate all (most) cheats</string>
@@ -5029,6 +5059,9 @@
        <height>20</height>
       </rect>
      </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activates a debug test menu whenever entering any talking head scene (e.x. betting against another driver). This allows you to preview all of their lines.&lt;/p&gt;&lt;p&gt;There is no way to exit this screen once entered. You must close the game afterwards.&lt;/p&gt;&lt;p&gt;Default code is CHAR.&lt;/p&gt;&lt;p&gt;Disabled by default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
      <property name="text">
       <string>Character test</string>
      </property>
@@ -5723,6 +5756,9 @@
        <width>80</width>
        <height>20</height>
       </rect>
+     </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Allows you to change when cars are unlocked in Career mode.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="text">
       <string>Car Unlocks...</string>
