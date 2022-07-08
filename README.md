@@ -3,6 +3,13 @@ An all-in-one editor for the 2005 racing game. Still a work-in-progress.
 
 There are pre-release versions available in [Releases](https://github.com/N1GHT-MAR3/JuicedEditor/releases), but bear in mind that these are not properly tested. I offer no guarantees that these will work.
 
+# Features
+* Restore online functionality courtesy of [OpenSpy](http://beta.openspy.net/en/)
+* Enable in-game cheat codes locked by the developers
+* Change when cars are unlocked in Career mode
+
+Many more features are planned in the future!
+
 # Compatibility
 | Executable         | Description                                   | Supported | Decrypted |
 | --------------     | ------------------------------------          | --------- | --------- |
