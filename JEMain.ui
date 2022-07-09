@@ -5791,6 +5791,7 @@
      <string>Help</string>
     </property>
     <addaction name="actionAbout"/>
+    <addaction name="actionCheckVersion"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuHelp"/>
@@ -5829,7 +5830,12 @@
   </action>
   <action name="actionAbout">
    <property name="text">
-    <string>About</string>
+    <string>About...</string>
+   </property>
+  </action>
+  <action name="actionCheckVersion">
+   <property name="text">
+    <string>Check for updates</string>
    </property>
   </action>
  </widget>

@@ -1283,10 +1283,13 @@ class Ui_JEMainWindow(object):
         self.actionSaveAs.setObjectName("actionSaveAs")
         self.actionAbout = QtGui.QAction(JEMainWindow)
         self.actionAbout.setObjectName("actionAbout")
+        self.actionCheckVersion = QtGui.QAction(JEMainWindow)
+        self.actionCheckVersion.setObjectName("actionCheckVersion")
         self.menuFile.addAction(self.actionOpen)
         self.menuFile.addAction(self.actionSave)
         self.menuFile.addAction(self.actionSaveAs)
         self.menuHelp.addAction(self.actionAbout)
+        self.menuHelp.addAction(self.actionCheckVersion)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuHelp.menuAction())
 
@@ -2242,7 +2245,8 @@ class Ui_JEMainWindow(object):
         self.actionOpen.setText(_translate("JEMainWindow", "Open..."))
         self.actionSave.setText(_translate("JEMainWindow", "Save"))
         self.actionSaveAs.setText(_translate("JEMainWindow", "Save As..."))
-        self.actionAbout.setText(_translate("JEMainWindow", "About"))
+        self.actionAbout.setText(_translate("JEMainWindow", "About..."))
+        self.actionCheckVersion.setText(_translate("JEMainWindow", "Check for updates"))
 
 
 if __name__ == "__main__":

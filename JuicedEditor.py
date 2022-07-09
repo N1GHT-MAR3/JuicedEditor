@@ -10,6 +10,9 @@ def resource_path(relative_path):
 
     return path.join(base_path, relative_path)
 
+# The version number of this build of Juiced Editor.
+version = 3
+
 # Imports PyQt6 modules used to display the GUI.
 from PyQt6 import QtCore, QtGui, QtWidgets
 # Imports the main window UI files from JEMain.py.
@@ -24,6 +27,8 @@ from os import getcwd, path
 import struct
 # Imports functions allowing the editor to open links.
 import webbrowser
+# Imports functions allowing the editor to read from web links.
+import urllib.request
 
 
 # Sets up the main window UI.
@@ -31,6 +36,9 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
     def __init__(self):
         super(JEMainWindow, self).__init__()
         self.setupUi(self)
+
+        # Check for a new version on startup.
+        self.checkVersion()
 
         # Sets up the Juiced icon.
         global juicedIcon
@@ -67,6 +75,9 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         # Runs openExe() when File -> Open... is clicked
         self.actionOpen.triggered.connect(self.openExe)
 
+        # Runs checkVersion() when About -> Check for updates is clicked
+        self.actionCheckVersion.triggered.connect(self.checkVersion)
+
         # Runs openDiscord() when the Discord button is clicked
         self.actionDiscord.clicked.connect(self.openDiscord)
 
@@ -98,6 +109,28 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         # Runs saveExeAs() when File -> Save As... is clicked
         self.actionSaveAs.triggered.connect(self.saveExeAs)
     
+    # Checks against version.txt on GitHub to see if the script is running the latest version.
+    def checkVersion(self):
+        try:
+            cur = int(urllib.request.urlopen("https://raw.githubusercontent.com/N1GHT-MAR3/JuicedEditor/main/version.txt").read())
+            if version < cur:
+                # If not, ask the user if they want to update.
+                update = QtWidgets.QMessageBox.question(self, "Update", "A new version of Juiced Editor is available. Would you like to update?", QtWidgets.QMessageBox.StandardButton.Yes|QtWidgets.QMessageBox.StandardButton.No)
+                # If they do, take the user to the releases page of the repo.
+                if update == 16384:
+                    webbrowser.open("https://github.com/N1GHT-MAR3/JuicedEditor/releases")
+                # If they don't, then this will do nothing and continue to Juiced Editor as normal.
+            # If checkVersion() was triggered by something (the check for updates button), display a message if Juiced Editor is up to date.
+            elif self.sender() != None:
+                QtWidgets.QMessageBox.information(self, "Up to date", "You're running the most recent version of Juiced Editor.")
+            # If not, silently continue to Juiced Editor.
+        # If the current version number cannot be determined...
+        except urllib.error.URLError:
+            # Show the user an error message if they clicked "Check for updates".
+            if self.sender() != None:
+                QtWidgets.QMessageBox.critical(self, "Error", "Could not determine the most recent version. Check your internet connection.")
+            # If not, silently continue to Juiced Editor.
+
     # Links to the Juiced Modding Discord server.
     def openDiscord(self):
         webbrowser.open("https://discord.gg/pu2jdxR")
