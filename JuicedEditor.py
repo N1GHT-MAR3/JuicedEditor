@@ -19,6 +19,8 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 from JEMain import Ui_JEMainWindow
 # Imports the car unlock dialog UI files from JECarUnlocks.py.
 from JECarUnlocks import Ui_JECarUnlocksDialog
+# Imports the about dialog UI files from JEAbout.py.
+from JEAbout import Ui_JEAboutDialog
 # Imports the file dialog seen when opening a file.
 from PyQt6.QtWidgets import QFileDialog
 # Imports a function used to get a Windows directory.
@@ -75,6 +77,9 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         # Runs openExe() when File -> Open... is clicked
         self.actionOpen.triggered.connect(self.openExe)
 
+        # Runs openAbout() when Help -> About... is clicked
+        self.actionAbout.triggered.connect(self.openAbout)
+
         # Runs checkVersion() when About -> Check for updates is clicked
         self.actionCheckVersion.triggered.connect(self.checkVersion)
 
@@ -130,6 +135,9 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             if self.sender() != None:
                 QtWidgets.QMessageBox.critical(self, "Error", "Could not determine the most recent version. Check your internet connection.")
             # If not, silently continue to Juiced Editor.
+    
+    def openAbout(self):
+        JEA.show()
 
     # Links to the Juiced Modding Discord server.
     def openDiscord(self):
@@ -944,11 +952,19 @@ class JECarUnlocksDialog(QtWidgets.QDialog, Ui_JECarUnlocksDialog):
         else:
             line.setText(str(self.sender().value() * 3) + " races")
 
+class JEAboutDialog(QtWidgets.QDialog, Ui_JEAboutDialog):
+    def __init__(self):
+        super(JEAboutDialog, self).__init__()
+        self.setupUi(self)
+
+        self.setWindowIcon(juicedIcon)
+
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     JE = JEMainWindow()
     JECU = JECarUnlocksDialog()
+    JEA = JEAboutDialog()
     JE.show()
     sys.exit(app.exec())

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>JEAboutDialog</class>
+ <widget class="QDialog" name="JEAboutDialog">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>About</string>
+  </property>
+  <widget class="QLabel" name="aboutText">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>400</width>
+     <height>400</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;a href=&quot;https://github.com/N1GHT-MAR3/JuicedEditor&quot;&gt;&lt;span style=&quot; font-weight:700; text-decoration: underline; color:#0000ff;&quot;&gt;Juiced Editor&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot; font-style:italic;&quot;&gt; (Pre-release 4)&lt;br/&gt;by &lt;/span&gt;N1GHTMAR3&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;Courtesy of the &lt;a href=&quot;https://discord.gg/pu2jdxR&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Juiced Modding Discord&lt;br/&gt;&lt;/span&gt;&lt;/a&gt;(if you need any help, come ask here!)&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700; text-decoration: underline;&quot;&gt;Modules used&lt;/span&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;a href=&quot;https://www.riverbankcomputing.com/software/pyqt/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;PyQt6&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;&lt;a href=&quot;https://pyinstaller.org/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;PyInstaller&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;&lt;a href=&quot;https://github.com/brentvollebregt/auto-py-to-exe&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Auto PY to EXE&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:700; text-decoration: underline;&quot;&gt;Special thanks&lt;/span&gt;&lt;span style=&quot; text-decoration: underline;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Bomb Bloke&lt;/span&gt;: for unswizzling console textures with your DDT converter&lt;span style=&quot; text-decoration: underline;&quot;&gt;&lt;br/&gt;&lt;/span&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Ekey&lt;/span&gt;: for opening the floodgates with your &lt;a href=&quot;https://github.com/Ekey/JCED.DAT.Tool/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;unpacker&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;GrimMaple&lt;/span&gt;: for making the game playable with &lt;a href=&quot;https://github.com/GrimMaple/JuicedFixes&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;JuicedFixes&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;mariokart64n&lt;/span&gt;: for JATool, your 3ds Max knowledge, and everything else&lt;br/&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;Martin_SW&lt;/span&gt;: for laying the groundwork of the modding scene&lt;br/&gt;The &lt;span style=&quot; font-weight:700;&quot;&gt;OpenSpy&lt;/span&gt; team: for &lt;a href=&quot;http://beta.openspy.net/en/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;making online play possible&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;RedCarDriver&lt;/span&gt;: for your gameplay overhauls and overall knowledge&lt;br/&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;SxnnyB&lt;/span&gt;: for your overarching knowledge, research, and consultation&lt;br/&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;4ernobill&lt;/span&gt;, &lt;span style=&quot; font-weight:700;&quot;&gt;Eagle&lt;/span&gt;, &lt;span style=&quot; font-weight:700;&quot;&gt;LotusEliseBoy&lt;/span&gt;, &lt;span style=&quot; font-weight:700;&quot;&gt;TFP&lt;/span&gt;, &lt;span style=&quot; font-weight:700;&quot;&gt;ZA-7&lt;/span&gt;:&lt;br/&gt;for all your contributions to the scene&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;...and everyone else that's helped keep this game alive!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="openExternalLinks">
+    <bool>true</bool>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
