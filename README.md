@@ -25,3 +25,25 @@ Many more features are planned in the future!
 | Xbox (default.xbe)   | The executable of the Xbox version.           | No        | ?         |
 
 If any executables are missing from this table, please let me know.
+
+# To-do
+### Version 1
+* Test and release
+### Version 2: Registry
+* Modify display settings without restriction:
+  * Resolution
+  * Widescreen
+  * Windowed mode
+  * Anti-aliasing (up to level 8)
+### Version 3: Soundtrack
+* Replace the in-game soundtrack with up to 128 of your own songs
+### Unknown
+* Console support (PS2 and Xbox)
+* More game patches
+  * Disable respect penalty for declining pink slips
+  * Unlock all upgrades without CARS cheat
+  * Edit starting cash and fallback cash (when you run out of money/cars)
+  * Edit spectator bet scaling and thresholds (thanks to SxnnyB)
+* Engine sound editor
+  * Compile your own engine sounds
+* Mod manager
