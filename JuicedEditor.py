@@ -11,7 +11,7 @@ def resource_path(relative_path):
     return path.join(base_path, relative_path)
 
 # The version number of this build of Juiced Editor.
-version = 3
+version = 4
 
 # Imports PyQt6 modules used to display the GUI.
 from PyQt6 import QtCore, QtGui, QtWidgets
