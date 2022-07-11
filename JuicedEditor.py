@@ -876,6 +876,10 @@ class JECarUnlocksDialog(QtWidgets.QDialog, Ui_JECarUnlocksDialog):
             self.carUnlocksTable.setCellWidget(i, 1, QtWidgets.QLineEdit())
             self.carUnlocksTable.cellWidget(i, 1).setReadOnly(True)
         
+        # Prevents rows and columns from being resized
+        self.carUnlocksTable.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeMode.Fixed)
+        self.carUnlocksTable.verticalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeMode.Fixed)
+        
         # Monitor each spin box to update the # races line edit whenever the spin box is changed.
         # Yes, this is terribly inefficient. No, I could not figure out a better way of doing this. Should note for the future though - there HAS to be a better way.
         self.carUnlocksTable.cellWidget(0, 0).valueChanged.connect(self.updateRaces)
