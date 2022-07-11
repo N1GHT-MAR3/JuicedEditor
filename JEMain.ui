@@ -5839,6 +5839,56 @@
    </property>
   </action>
  </widget>
+ <tabstops>
+  <tabstop>InfoExePath</tabstop>
+  <tabstop>InfoServerPatchButton</tabstop>
+  <tabstop>cheatPINT1</tabstop>
+  <tabstop>cheatPINT2</tabstop>
+  <tabstop>cheatPINT3</tabstop>
+  <tabstop>cheatPINT4</tabstop>
+  <tabstop>cheatDOSH1</tabstop>
+  <tabstop>cheatDOSH2</tabstop>
+  <tabstop>cheatDOSH3</tabstop>
+  <tabstop>cheatDOSH4</tabstop>
+  <tabstop>cheatRESP1</tabstop>
+  <tabstop>cheatRESP2</tabstop>
+  <tabstop>cheatRESP3</tabstop>
+  <tabstop>cheatRESP4</tabstop>
+  <tabstop>cheatCARS1</tabstop>
+  <tabstop>cheatCARS2</tabstop>
+  <tabstop>cheatCARS3</tabstop>
+  <tabstop>cheatCARS4</tabstop>
+  <tabstop>cheatCREW1</tabstop>
+  <tabstop>cheatCREW2</tabstop>
+  <tabstop>cheatCREW3</tabstop>
+  <tabstop>cheatCREW4</tabstop>
+  <tabstop>cheatCHAR1</tabstop>
+  <tabstop>cheatCHAR2</tabstop>
+  <tabstop>cheatCHAR3</tabstop>
+  <tabstop>cheatCHAR4</tabstop>
+  <tabstop>cheatWIN1</tabstop>
+  <tabstop>cheatWIN2</tabstop>
+  <tabstop>cheatWIN3</tabstop>
+  <tabstop>cheatWIN4</tabstop>
+  <tabstop>cheatALL1</tabstop>
+  <tabstop>cheatALL2</tabstop>
+  <tabstop>cheatALL3</tabstop>
+  <tabstop>cheatALL4</tabstop>
+  <tabstop>cheatDOSHValue</tabstop>
+  <tabstop>cheatRESPValue</tabstop>
+  <tabstop>cheatPINTCheckbox</tabstop>
+  <tabstop>cheatDOSHCheckbox</tabstop>
+  <tabstop>cheatRESPCheckbox</tabstop>
+  <tabstop>cheatCARSCheckbox</tabstop>
+  <tabstop>cheatCREWCheckbox</tabstop>
+  <tabstop>cheatCHARCheckbox</tabstop>
+  <tabstop>cheatWINCheckbox</tabstop>
+  <tabstop>cheatALLCheckbox</tabstop>
+  <tabstop>modsCarUnlockButton</tabstop>
+  <tabstop>expertDummyButton</tabstop>
+  <tabstop>actionDiscord</tabstop>
+  <tabstop>actionGitHub</tabstop>
+ </tabstops>
  <resources>
   <include location="icons.qrc"/>
  </resources>
