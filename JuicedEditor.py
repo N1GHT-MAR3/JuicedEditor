@@ -69,8 +69,6 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         self.InfoDecryptStatus.setStyleSheet("color: black;")
         self.InfoServerPatchStatus.setText("")
         self.InfoServerPatchStatus.setStyleSheet("color: black;")
-        self.expertDummyStatus.setText("")
-        self.expertDummyStatus.setStyleSheet("color: black;")
         self.cheatDOSHValue.setValue(10000000)
         self.cheatRESPValue.setValue(2000)
 
@@ -104,9 +102,6 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
 
         # Runs showCarUnlocks() when "Car Unlocks..." is clicked
         self.modsCarUnlockButton.clicked.connect(self.showCarUnlocks)
-
-        # Runs patchDummy() when Patch dummyfile.dat is clicked
-        self.expertDummyButton.clicked.connect(self.patchDummy)
 
         # Runs saveExe() when File -> Save is clicked
         self.actionSave.triggered.connect(self.saveExe)
@@ -524,16 +519,15 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         
         # Find the location in the .exe where carmodels.dat would be defined using a consistent byte string that comes before it in all 4 .exes.
         locModels = exe_bytes.index(b"\x69\x00\x00\x4A\x00\x75\x00\x69\x00\x63\x00\x65\x00\x64\x00\x00\x00\x00\x00") + 19
-        # If carmodels.dat hasn't already been patched to dummyfile.dat, inform the user of this and enable the option to patch it.
+
+        # Check to see if dummyfile.dat has been patched in, and update the checkbox accordingly.
         if exe_bytes[locModels:locModels + 13] != b"dummyfile.dat":
-            self.expertDummyStatus.setText("No")
-            self.expertDummyStatus.setStyleSheet("color: red;")
-            self.expertDummyButton.setEnabled(True)
-        # Vice versa.
+            self.expertDummyCheckbox.setChecked(False)
         else:
-            self.expertDummyStatus.setText("Yes")
-            self.expertDummyStatus.setStyleSheet("color: blue;")
-            self.expertDummyButton.setEnabled(False)
+            self.expertDummyCheckbox.setChecked(True)
+        
+        # Allow the user to toggle the dummyfile.dat patch.
+        self.expertDummyCheckbox.setEnabled(True)
         
         # Allow saving the .exe.
         self.actionSave.setEnabled(True)
@@ -712,14 +706,6 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
     
     def showCarUnlocks(self):
         JECU.show()
-
-    # Patches dummyfile.dat over carmodels.dat.
-    def patchDummy(self):
-        exe_bytes[locModels:locModels + 13] = b"dummyfile.dat"
-        self.expertDummyStatus.setText("Yes")
-        self.expertDummyStatus.setStyleSheet("color: blue;")
-        self.expertDummyButton.setEnabled(False)
-        QtWidgets.QMessageBox.information(self, "Success", "dummyfile.dat has been patched in.\nRemember to save your changes.")
     
     # Reverses the operation done in convCode.
     def convCodeBack(self, index):
@@ -818,6 +804,11 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         for i in range(52):
             exe_bytes[locCarUnlocks + (indexDict[i] * 4):locCarUnlocks + (indexDict[i] * 4) + 4] = int.to_bytes(JECU.carUnlocksTable.cellWidget(i, 0).value(), 4, "little")
         
+        if self.expertDummyCheckbox.isChecked():
+            exe_bytes[locModels:locModels + 13] = b"dummyfile.dat"
+        else:
+            exe_bytes[locModels:locModels + 13] = b"carmodels.dat"
+
         try:
             f = open(exePath, "wb")
         # Throw an error message if the file is read-only or the user lacks permissions to save in the directory (ex. Program Files).

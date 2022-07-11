@@ -286,7 +286,10 @@
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;dummyfile.dat:&lt;span style=&quot; font-size:11pt; font-weight:700; color:#0055ff; vertical-align:super;&quot;&gt;[?]&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
-    <widget class="QLabel" name="expertDummyStatus">
+    <widget class="QCheckBox" name="expertDummyCheckbox">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>110</x>
@@ -295,27 +298,8 @@
        <height>20</height>
       </rect>
      </property>
-     <property name="styleSheet">
-      <string notr="true">color: red;</string>
-     </property>
      <property name="text">
-      <string>No</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="expertDummyButton">
-     <property name="enabled">
-      <bool>false</bool>
-     </property>
-     <property name="geometry">
-      <rect>
-       <x>140</x>
-       <y>30</y>
-       <width>120</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Patch dummyfile.dat</string>
+      <string/>
      </property>
     </widget>
    </widget>
@@ -5885,7 +5869,6 @@
   <tabstop>cheatWINCheckbox</tabstop>
   <tabstop>cheatALLCheckbox</tabstop>
   <tabstop>modsCarUnlockButton</tabstop>
-  <tabstop>expertDummyButton</tabstop>
   <tabstop>actionDiscord</tabstop>
   <tabstop>actionGitHub</tabstop>
  </tabstops>
