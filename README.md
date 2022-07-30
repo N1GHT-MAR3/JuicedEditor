@@ -26,6 +26,11 @@ Many more features are planned in the future!
 
 If any executables are missing from this table, please let me know.
 
+# Modules used
+* [PyQt6](https://www.riverbankcomputing.com/software/pyqt/)
+* [PyInstaller](https://pyinstaller.org/)
+* [Auto PY to EXE](https://github.com/brentvollebregt/auto-py-to-exe)
+
 # To-do
 ### Version 1
 * Test and release
