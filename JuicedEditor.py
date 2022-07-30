@@ -2,7 +2,7 @@
 Juiced Editor
 by N1GHTMAR3
 
-Pre-release version 5
+Pre-release version 6
 released 2022-07-30
 
 https://github.com/N1GHT-MAR3/JuicedEditor
@@ -21,7 +21,7 @@ def resource_path(relative_path):
     return path.join(base_path, relative_path)
 
 # The version number of this build of Juiced Editor.
-version = 5
+version = 6
 
 # Imports PyQt6 modules used to display the GUI.
 from PyQt6 import QtCore, QtGui, QtWidgets
@@ -331,17 +331,18 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             self.cheatDOSH2.setEnabled(True)
             self.cheatDOSH3.setEnabled(True)
             self.cheatDOSH4.setEnabled(True)
-            if decrypted:
-                self.cheatDOSHValue.setValue(int.from_bytes(exe_bytes[locDOSH:locDOSH + 4], "little"))
-                self.cheatDOSHValue.setEnabled(True)
             self.cheatDOSHCheckbox.setChecked(True)
         else:
             self.cheatDOSH1.setEnabled(False)
             self.cheatDOSH2.setEnabled(False)
             self.cheatDOSH3.setEnabled(False)
             self.cheatDOSH4.setEnabled(False)
-            self.cheatDOSHValue.setEnabled(False)
             self.cheatDOSHCheckbox.setChecked(False)
+        if decrypted:
+            self.cheatDOSHValue.setValue(int.from_bytes(exe_bytes[locDOSH:locDOSH + 4], "little"))
+            self.cheatDOSHValue.setEnabled(True)
+        else:
+            self.cheatDOSHValue.setEnabled(False)
         
         if exe_bytes[locCheats + 8] != 139:
             self.cheatRESP1.setCurrentIndex(convCode(8))
@@ -352,9 +353,6 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             self.cheatRESP2.setEnabled(True)
             self.cheatRESP3.setEnabled(True)
             self.cheatRESP4.setEnabled(True)
-            if decrypted:
-                self.cheatRESPValue.setValue(int(struct.unpack('f', exe_bytes[locRESP:locRESP + 4])[0]))
-                self.cheatRESPValue.setEnabled(True)
             self.cheatRESPCheckbox.setChecked(True)
         else:
             # If the cheat is disabled, deny access to the combo boxes unless the cheat is enabled by the user
@@ -362,8 +360,12 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             self.cheatRESP2.setEnabled(False)
             self.cheatRESP3.setEnabled(False)
             self.cheatRESP4.setEnabled(False)
-            self.cheatRESPValue.setEnabled(False)
             self.cheatRESPCheckbox.setChecked(False)
+        if decrypted:
+            self.cheatRESPValue.setValue(int(struct.unpack('f', exe_bytes[locRESP:locRESP + 4])[0]))
+            self.cheatRESPValue.setEnabled(True)
+        else:
+            self.cheatRESPValue.setEnabled(False)
         
         if exe_bytes[locCheats + 12] != 139:
             self.cheatCARS1.setCurrentIndex(convCode(12))
