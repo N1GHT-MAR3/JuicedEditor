@@ -1,3 +1,13 @@
+'''
+Juiced Editor
+by N1GHTMAR3
+
+Pre-release version 5
+released 2022-07-30
+
+https://github.com/N1GHT-MAR3/JuicedEditor
+'''
+
 # Allows images to properly display while running as an .exe.
 # Big thanks and all credit to max on StackOverflow for this. (https://stackoverflow.com/a/13790741)
 def resource_path(relative_path):
@@ -11,7 +21,7 @@ def resource_path(relative_path):
     return path.join(base_path, relative_path)
 
 # The version number of this build of Juiced Editor.
-version = 4
+version = 5
 
 # Imports PyQt6 modules used to display the GUI.
 from PyQt6 import QtCore, QtGui, QtWidgets
@@ -862,6 +872,9 @@ class JECarUnlocksDialog(QtWidgets.QDialog, Ui_JECarUnlocksDialog):
 
         self.setWindowIcon(juicedIcon)
 
+        # Runs fixTabOrder() whenever switching to a different cell in the table.
+        self.carUnlocksTable.currentCellChanged.connect(self.fixTabOrder)
+
         for i in range(self.carUnlocksTable.rowCount()):
             # Make each first item in a row a spin box to determine what unlock tier a car is in.
             self.carUnlocksTable.setCellWidget(i, 0, QtWidgets.QSpinBox())
@@ -935,6 +948,7 @@ class JECarUnlocksDialog(QtWidgets.QDialog, Ui_JECarUnlocksDialog):
         self.carUnlocksTable.cellWidget(50, 0).valueChanged.connect(self.updateRaces)
         self.carUnlocksTable.cellWidget(51, 0).valueChanged.connect(self.updateRaces)
     
+
     # Refresh text to determine how many races an unlock tier requires.
     def updateRaces(self):
         # Since children in a table widget don't know their index in said table, use this workaround to find that out.
@@ -946,6 +960,11 @@ class JECarUnlocksDialog(QtWidgets.QDialog, Ui_JECarUnlocksDialog):
         # Otherwise, # races required is just the tier times three.
         else:
             line.setText(str(self.sender().value() * 3) + " races")
+    
+    # Keeps the table from tabbing into the read-only unlocks column.
+    def fixTabOrder(self):
+        if self.sender().currentColumn() == 1:
+            self.carUnlocksTable.setCurrentCell(self.sender().currentRow() + 1, 0)
 
 class JEAboutDialog(QtWidgets.QDialog, Ui_JEAboutDialog):
     def __init__(self):

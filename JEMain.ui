@@ -5872,8 +5872,6 @@
   <tabstop>actionDiscord</tabstop>
   <tabstop>actionGitHub</tabstop>
  </tabstops>
- <resources>
-  <include location="icons.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
