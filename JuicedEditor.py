@@ -338,7 +338,7 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             self.cheatDOSH3.setEnabled(False)
             self.cheatDOSH4.setEnabled(False)
             self.cheatDOSHCheckbox.setChecked(False)
-        if decrypted:
+        if exe_bytes[locCheats + 4] != 139 and decrypted:
             self.cheatDOSHValue.setValue(int.from_bytes(exe_bytes[locDOSH:locDOSH + 4], "little"))
             self.cheatDOSHValue.setEnabled(True)
         else:
@@ -361,7 +361,7 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             self.cheatRESP3.setEnabled(False)
             self.cheatRESP4.setEnabled(False)
             self.cheatRESPCheckbox.setChecked(False)
-        if decrypted:
+        if exe_bytes[locCheats + 8] != 139 and decrypted:
             self.cheatRESPValue.setValue(int(struct.unpack('f', exe_bytes[locRESP:locRESP + 4])[0]))
             self.cheatRESPValue.setEnabled(True)
         else:
