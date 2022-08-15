@@ -726,8 +726,53 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         else:
             return index + 155
     
+    # Check if any cheats use duplicate codes.
+    def checkCheats(self):
+        # Initialize a list of the cheat codes to patch in.
+        newCheats = []
+        # Check each cheat to see if it's enabled. If it is, pack its code into a tuple and add it to the list.
+        if self.cheatPINTCheckbox.isChecked():
+            newCheats.append((self.cheatPINT1.currentIndex(), self.cheatPINT2.currentIndex(), self.cheatPINT3.currentIndex(), self.cheatPINT4.currentIndex()))
+        if self.cheatDOSHCheckbox.isChecked():
+            newCheats.append((self.cheatDOSH1.currentIndex(), self.cheatDOSH2.currentIndex(), self.cheatDOSH3.currentIndex(), self.cheatDOSH4.currentIndex()))
+        if self.cheatRESPCheckbox.isChecked():
+            newCheats.append((self.cheatRESP1.currentIndex(), self.cheatRESP2.currentIndex(), self.cheatRESP3.currentIndex(), self.cheatRESP4.currentIndex()))
+        if self.cheatCARSCheckbox.isChecked():
+            newCheats.append((self.cheatCARS1.currentIndex(), self.cheatCARS2.currentIndex(), self.cheatCARS3.currentIndex(), self.cheatCARS4.currentIndex()))
+        if self.cheatCREWCheckbox.isChecked():
+            newCheats.append((self.cheatCREW1.currentIndex(), self.cheatCREW2.currentIndex(), self.cheatCREW3.currentIndex(), self.cheatCREW4.currentIndex()))
+        if self.cheatCHARCheckbox.isChecked():
+            newCheats.append((self.cheatCHAR1.currentIndex(), self.cheatCHAR2.currentIndex(), self.cheatCHAR3.currentIndex(), self.cheatCHAR4.currentIndex()))
+        if self.cheatWINCheckbox.isChecked():
+            newCheats.append((self.cheatWIN1.currentIndex(), self.cheatWIN2.currentIndex(), self.cheatWIN3.currentIndex(), self.cheatWIN4.currentIndex()))
+        if self.cheatALLCheckbox.isChecked():
+            newCheats.append((self.cheatALL1.currentIndex(), self.cheatALL2.currentIndex(), self.cheatALL3.currentIndex(), self.cheatALL4.currentIndex()))
+        
+        # If there's more than one cheat enabled...
+        if len(newCheats) > 1:
+            # Run one less check than there are cheats...
+            for i in range(len(newCheats) - 1):
+                # ...to see if there are any tuples (codes) that occur more than once in the list.
+                if newCheats.count(newCheats[i]) > 1:
+                    # If there are any, show the user a warning message about the duplicate codes and ask them if they want to save anyways.
+                    question = QtWidgets.QMessageBox.warning(self, "Warning", "You have multiple cheats with the same code. Only the first cheat using a given code will be triggered in-game. Do you wish to continue?", QtWidgets.QMessageBox.StandardButton.Yes|QtWidgets.QMessageBox.StandardButton.No)
+                    # If they select yes (represented by int 16384), break the loop (since they've indicated they're okay with dupe codes) and return True to indicate that the check is good.
+                    if question == 16384:
+                        return True
+                    # If they select no (represented by int 16384), break the loop and return False to indicate that the check did not pass.
+                    elif question == 65536:
+                        return False
+        # If the check completes fully without any issues, return True.
+        return True
+                    
+
+
     # Save the .exe to the same place it was opened from.
     def saveExe(self):
+        # If the cheat check did not clear, do not save the .exe.
+        if self.checkCheats() == False:
+            return
+        # Check to see that the PINT cheat is enabled.
         if self.cheatPINTCheckbox.isChecked():
             # If it is, convert each of the letters to their corresponding number that Juiced's codes use
             exe_bytes[locCheats] = self.convCodeBack(self.cheatPINT1.currentIndex())
