@@ -11,18 +11,30 @@ There are pre-release versions available in [Releases](https://github.com/N1GHT-
 Many more features are planned in the future!
 
 # Compatibility
-| Executable           | Description                                   | Supported | Decrypted |
-| --------------       | ------------------------------------          | --------- | --------- |
-| PC (unpatched)       | The default .exe that comes on disc.          | Yes       | No        |
-| PC (patched)         | The 1.1 patched .exe.                         | Yes       | No        |
-| PC (DRM-free)        | A 1.0 .exe with DRM bypassed.                 | Yes       | Yes       |
-| PC (DRM-free, fixed) | A fixed 1.0 .exe with DRM bypassed.           | Yes       | Yes       |
-| PS2 (SLUS_208.72)    | The American executable of the PS2 version.   | No        | ?         |
-| PS2 (SLES_530.44)    | The European executable of the PS2 version.   | No        | ?         |
-| PS2 (SLES_531.51)    | The Italian executable of the PS2 version.    | No        | ?         |
-| PS2 (SLPM_662.77)    | The Japanese executable of the PS2 version.   | No        | ?         |
-| PS2 (SLKA_252.83)    | The Korean executable of the PS2 version.     | No        | ?         |
-| Xbox (default.xbe)   | The executable of the Xbox version.           | No        | ?         |
+| Platform | Version                  | Description                                      | Supported | Decrypted |
+| -------- | ------------------------ | ------------------------------------------------ | --------- | --------- |
+| PC       | Retail (unpatched)       | The default .exe that comes on disc.             | Yes       | No        |
+| PC       | Retail (patched)         | The 1.1 patched .exe.                            | Yes       | No        |
+| PC       | Retail (DRM-free)        | A 1.0 .exe with DRM bypassed.                    | Yes       | Yes       |
+| PC       | Retail (DRM-free, fixed) | A fixed 1.0 .exe with DRM bypassed.              | Yes       | Yes       |
+| PC       | Demo (unpatched)         | The default .exe that comes with the demo.       | No        | ?         |
+| PC       | Demo (patched)           | The patched .exe that comes with the demo.       | No        | ?         |
+| PC       | Acclaim Demo (04-05-27)  | The .exe on the May 27, 2004 Acclaim demo.       | No        | ?         |
+| PC       | Acclaim Demo (04-07-02)  | The .exe on the July 2, 2004 Acclaim demo.       | No        | ?         |
+| Xbox     | Retail                   | The executable of the Xbox version.              | No        | ?         |
+| Xbox     | Acclaim (04-05-05)       | The executable of the May 5, 2004 Xbox beta.     | No        | ?         |
+| Xbox     | Acclaim (04-05-13)       | The executable of the May 13, 2004 Xbox beta.    | No        | ?         |
+| Xbox     | Acclaim (04-07-13)       | The executable of the July 13, 2004 Xbox beta.   | No        | ?         |
+| Xbox     | Acclaim (04-08-04)       | The executable of the August 4, 2004 Xbox beta.  | No        | ?         |
+| Xbox     | Acclaim (04-08-30)       | The executable of the August 30, 2004 Xbox beta. | No        | ?         |
+| PS2      | Retail (SLUS_208.72)     | The executable of the American PS2 version.      | No        | ?         |
+| PS2      | Retail (SLES_530.44)     | The executable of the European PS2 version.      | No        | ?         |
+| PS2      | Retail (SLES_531.51)     | The executable of the Italian PS2 version.       | No        | ?         |
+| PS2      | Retail (SLPM_662.77)     | The executable of the Japanese PS2 version.      | No        | ?         |
+| PS2      | Retail (SLKA_252.83)     | The executable of the Korean PS2 version.        | No        | ?         |
+| PS2      | Acclaim (04-06-11)       | The executable of the June 11, 2004 PS2 beta.    | No        | ?         |
+| PS2      | Acclaim (04-07-28)       | The executable of the July 28, 2004 PS2 beta.    | No        | ?         |
+
 
 If any executables are missing from this table, please let me know.
 
