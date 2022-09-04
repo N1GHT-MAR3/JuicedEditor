@@ -26,7 +26,6 @@ Many more features are planned in the future!
 | Xbox     | Acclaim (05-13)          | The executable of the May 13, 2004 Xbox beta.    | No        | ?         |
 | Xbox     | Acclaim (07-13)          | The executable of the July 13, 2004 Xbox beta.   | No        | ?         |
 | Xbox     | Acclaim (08-04)          | The executable of the August 4, 2004 Xbox beta.  | No        | ?         |
-| Xbox     | Acclaim (08-30)          | The executable of the August 30, 2004 Xbox beta. | No        | ?         |
 | PS2      | Retail (SLUS_208.72)     | The executable of the American PS2 version.      | No        | ?         |
 | PS2      | Retail (SLES_530.44)     | The executable of the European PS2 version.      | No        | ?         |
 | PS2      | Retail (SLES_531.51)     | The executable of the Italian PS2 version.       | No        | ?         |
