@@ -38,7 +38,7 @@ Many more features are planned in the future!
 If any executables are missing from this table, please let me know.
 
 # Modules used
-* [PyQt6](https://www.riverbankcomputing.com/software/pyqt/)
+* [PySide6](https://wiki.qt.io/Qt_for_Python)
 * [PyInstaller](https://pyinstaller.org/)
 * [Auto PY to EXE](https://github.com/brentvollebregt/auto-py-to-exe)
 
