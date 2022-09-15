@@ -1,3 +1,3 @@
-pyuic6 -x JEMain.ui -o JEMain.py
-pyuic6 -x JECarUnlocks.ui -o JECarUnlocks.py
-pyuic6 -x JEAbout.ui -o JEAbout.py
+pyside6-uic JEMain.ui -o JEMain.py
+pyside6-uic JECarUnlocks.ui -o JECarUnlocks.py
+pyside6-uic JEAbout.ui -o JEAbout.py
