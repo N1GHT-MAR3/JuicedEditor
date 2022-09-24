@@ -11,6 +11,9 @@ There are pre-release versions available in [Releases](https://github.com/N1GHT-
 Many more features are planned in the future!
 
 # Compatibility
+
+Juiced Editor only works on Windows 10 and later, due to being built on Python 3.9 and Qt6. Earlier versions of Windows will not work until a legacy version can be developed.
+
 | Platform | Version                  | Description                                      | Supported | Decrypted |
 | -------- | ------------------------ | ------------------------------------------------ | --------- | --------- |
 | PC       | Retail (unpatched)       | The default .exe that comes on disc.             | Yes       | No        |
@@ -50,6 +53,7 @@ If any executables are missing from this table, please let me know.
 * Replace the in-game soundtrack with up to 128 of your own songs
 ### Unknown
 * Console support (PS2 and Xbox)
+* Legacy OS support (at least as far back as Windows XP)
 * More game patches
   * Disable respect penalty for declining pink slips
   * Unlock all upgrades without CARS cheat
