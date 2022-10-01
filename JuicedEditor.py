@@ -2,8 +2,8 @@
 Juiced Editor
 by N1GHTMAR3
 
-Pre-release version 6
-released 2022-07-30
+Version 1
+released 2022-10-01
 
 https://github.com/N1GHT-MAR3/JuicedEditor
 '''
