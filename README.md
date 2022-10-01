@@ -1,7 +1,7 @@
 # Juiced Editor
 An all-in-one editor for the 2005 racing game. Still a work-in-progress.
 
-There are pre-release versions available in [Releases](https://github.com/N1GHT-MAR3/JuicedEditor/releases), but bear in mind that these are not properly tested. I offer no guarantees that these will work.
+[A full release](https://github.com/N1GHT-MAR3/JuicedEditor/releases) is now available. Note that this hasn't been tested very thoroughly, and may have issues. Please report anything you find.
 
 # Features
 * Restore online functionality courtesy of [OpenSpy](http://beta.openspy.net/en/)
@@ -40,9 +40,11 @@ Juiced Editor only works on Windows 10 and later, due to being built on Python 3
 
 If any executables are missing from this table, please let me know.
 
+# Changelog
+## Version 1
+* First official release
+
 # To-do
-### Version 1
-* Test and release
 ### Version 2: Registry
 * Modify display settings without restriction:
   * Resolution
