@@ -18,9 +18,10 @@ Juiced Editor only works on Windows 10 and later, due to being built on Python 3
 | -------- | ------------------------   | ------------------------------------------------ | --------- | --------- |
 | PC       | Retail (unpatched)         | The default .exe that comes on disc.             | Yes       | No        |
 | PC       | Retail (patched)           | The 1.1 patched .exe.                            | Yes       | No        |
-| PC       | Retail (DRM-free)          | A 1.0 .exe with DRM bypassed.                    | Yes       | Yes       |
-| PC       | Retail (DRM-free, fixed)   | A fixed 1.0 .exe with DRM bypassed.              | Yes       | Yes       |
-| PC       | Retail (patched, DRM-free) | The 1.1 patched .exe with DRM bypassed.          | Yes*      | No        |
+| PC       | Retail (hlm-juic)          | A 1.0 .exe with DRM bypassed.                    | Yes       | Yes       |
+| PC       | Retail (hlm-juif)          | A fixed 1.0 .exe with DRM bypassed.              | Yes       | Yes       |
+| PC       | Retail (Z3r0n3 v1)         | The 1.1 patched .exe with DRM bypassed.          | Yes*      | Yes       |
+| PC       | Retail (Z3r0n3 v2)         |                                                  | Yes*      | Yes       |
 | PC       | Demo (unpatched)           | The default .exe that comes with the demo.       | No        | ?         |
 | PC       | Demo (patched)             | The patched .exe that comes with the demo.       | No        | ?         |
 | PC       | Acclaim Demo (05-27)       | The .exe on the May 27, 2004 Acclaim demo.       | No        | ?         |
