@@ -138,7 +138,7 @@
      <property name="geometry">
       <rect>
        <x>270</x>
-       <y>50</y>
+       <y>70</y>
        <width>100</width>
        <height>20</height>
       </rect>
@@ -157,7 +157,7 @@
      <property name="geometry">
       <rect>
        <x>400</x>
-       <y>50</y>
+       <y>70</y>
        <width>90</width>
        <height>20</height>
       </rect>
@@ -186,7 +186,7 @@
      <property name="geometry">
       <rect>
        <x>370</x>
-       <y>50</y>
+       <y>70</y>
        <width>20</width>
        <height>20</height>
       </rect>
@@ -236,6 +236,38 @@
      </property>
      <property name="flat">
       <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="InfoVersion">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>50</y>
+       <width>100</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Which version of the game this .exe is.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Version:&lt;span style=&quot; font-size:11pt; font-weight:696; color:#0055ff; vertical-align:super;&quot;&gt;[?]&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="InfoVersionStatus">
+     <property name="geometry">
+      <rect>
+       <x>370</x>
+       <y>50</y>
+       <width>121</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string>Unknown</string>
      </property>
     </widget>
    </widget>
@@ -5759,7 +5791,7 @@
      <x>0</x>
      <y>0</y>
      <width>500</width>
-     <height>22</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

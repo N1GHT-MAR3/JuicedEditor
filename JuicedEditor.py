@@ -9,7 +9,7 @@ https://github.com/N1GHT-MAR3/JuicedEditor
 '''
 
 # Allows images to properly display while running as an .exe.
-# Big thanks and all credit to max on StackOverflow for this. (https://stackoverflow.com/a/13790741)
+# Credit to max on StackOverflow for this. (https://stackoverflow.com/a/13790741)
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
     try:
@@ -21,10 +21,10 @@ def resource_path(relative_path):
     return path.join(base_path, relative_path)
 
 # The version number of this build of Juiced Editor.
-version = 7
+version = 8
 
-# Imports PySide6 modules used to display the GUI.
-from PySide6 import QtCore, QtGui, QtWidgets
+# Imports PySide2 modules used to display the GUI.
+from PySide2 import QtCore, QtGui, QtWidgets
 # Imports the main window UI files from JEMain.py.
 from JEMain import Ui_JEMainWindow
 # Imports the car unlock dialog UI files from JECarUnlocks.py.
@@ -32,7 +32,7 @@ from JECarUnlocks import Ui_JECarUnlocksDialog
 # Imports the about dialog UI files from JEAbout.py.
 from JEAbout import Ui_JEAboutDialog
 # Imports the file dialog seen when opening a file.
-from PySide6.QtWidgets import QFileDialog
+from PySide2.QtWidgets import QFileDialog
 # Imports a function used to get a Windows directory.
 from os import getcwd, path
 # Imports functions required to convert bytes to and from floats.
@@ -51,6 +51,9 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
 
         # Check for a new version on startup.
         self.checkVersion()
+
+        # Initialize the variable for the last used path.
+        self.lastPath = ""
 
         # Sets up the Juiced icon.
         global juicedIcon
@@ -77,6 +80,7 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         self.InfoExeSize.setText("")
         self.InfoDecryptStatus.setText("")
         self.InfoDecryptStatus.setStyleSheet("color: black;")
+        self.InfoVersionStatus.setText("")
         self.InfoServerPatchStatus.setText("")
         self.InfoServerPatchStatus.setStyleSheet("color: black;")
         self.cheatDOSHValue.setValue(10000000)
@@ -158,6 +162,7 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         global decrypted
         global exePath
         global exe_type
+        global exeVer
         global locCheats
         global locDOSH
         global locRESP
@@ -165,9 +170,14 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         global carUnlocks
         global locModels
         global indexDict
-        # Opens a file dialog asking the user to locate Juiced.exe.
-        exeTempPath = QFileDialog.getOpenFileName(self, "Open...", getcwd(), "Executable files (*.exe)")[0]
-        #exePath = QFileDialog.getOpenFileName(self, "Open...", "C:\\Users\\N1GHTMAR3\\Documents\\Programs\\Juiced Editor", "Executable files (*.exe)")[0]
+
+        # Check if a path has already been logged.
+        if self.lastPath != "":
+            # If there is, open a file dialog asking the user to locate the Juiced executable, using the last used path as a starting point.
+            exeTempPath = QFileDialog.getOpenFileName(self, "Open...", self.lastPath, "Executable files (*.exe)")[0]
+        # If not, open a file dialog asking the user to locate Juiced.exe, using the current working directory as a starting point.
+        else:
+            exeTempPath = QFileDialog.getOpenFileName(self, "Open...", getcwd(), "Executable files (*.exe)")[0]
         # Try to open the .exe at the path provided by the user in the file dialog.
         product_name_bytes = b"\x4A\x00\x75\x00\x69\x00\x63\x00\x65\x00\x64\x00\x20\x00\x50\x00\x43\x00\x20\x00\x47\x00\x61\x00\x6D\x00\x65"
         
@@ -188,6 +198,8 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         exe_bytes = bytearray(exe)
         # Closes the .exe so it's not being used. Doesn't need to be until the .exe is saved anyways.
         f.close()
+        # Record the file path used to lastPath.
+        self.lastPath = exePath[:exePath.rfind("/")]
 
         '''
         Detects the type of Juiced .exe:
@@ -196,6 +208,8 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         2 = vanilla patched .exe    ; the updated .exe that comes with the online patcher
         3 = hlm-juic .exe           ; initial crack by Hoodlum - unpatched .exe
         4 = hlm-juif .exe           ; fixed crack by Hoodlum - unpatched .exe
+        5 = Z3r0n3 v1 .exe          ; initial crack by Z3r0n3 - patched .exe
+        6 = Z3r0n3 v2 .exe          ; latest crack by Z3r0n3 - patched .exe
         '''
         # If the .exe is 12,560,384 bytes, it's probably an hlm-juif .exe.
         if len(exe_bytes) == 12560384:
@@ -214,6 +228,12 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             # If it isn't either of these, something's probably gone wrong - flag it as an unknown .exe.
             else:
                 exe_type = 0
+        # If the .exe is 30,097,408 bytes, it's probably a Z3r0n3 v1 .exe.
+        elif len(exe_bytes) == 30097408:
+            exe_type = 5
+        # If the .exe is 13,760,830 bytes, it's probably a Z3r0n3 v2 .exe.
+        elif len(exe_bytes) == 13760830:
+            exe_type = 6
         # If the file size doesn't match any known .exe, flag it as an unknown.
         else:
             exe_type = 0
@@ -231,6 +251,10 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             exeTypeStr += "(hlm-juic)"
         elif exe_type == 4:
             exeTypeStr += "(hlm-juif)"
+        elif exe_type == 5:
+            exeTypeStr += "(Z3r0n3 v1)"
+        elif exe_type == 6:
+            exeTypeStr += "(Z3r0n3 v2)"
         # Set the text of the .exe info label to the string.
         self.InfoExeType.setText(exeTypeStr)
         # Take the file path and cut it off before the last slash, and set that as the text of the .exe path label.
@@ -238,6 +262,21 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         self.InfoExePath.setText(exePath[:exePath.rindex('/')])
         # Get the length of the .exe, add comma separators to it, and set that as the text of the .exe size label.
         self.InfoExeSize.setText("{:,}".format(len(exe_bytes)) + " bytes")
+
+        # Set the version of the .exe depending on which type is loaded.
+        if exe_type == 1 or exe_type == 3 or exe_type == 4:
+            exeVer = 1
+        elif exe_type == 2 or exe_type == 5 or exe_type == 6:
+            exeVer = 2
+        elif exe_type == 0:
+            exeVer = 0
+        # Update the version label accordingly.
+        if exeVer == 1:
+            self.InfoVersionStatus.setText("v1.0")
+        elif exeVer == 2:
+            self.InfoVersionStatus.setText("v1.1")
+        elif exeVer == 0:
+            self.InfoVersionStatus.setText("Unknown")
 
         # Checks for a certain string of bytes that only appears in decrypted .exes.
         if b"\x2C\xC2\x04\x00\xC7\x47\x0C" in exe_bytes:
@@ -891,6 +930,10 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             exeTypeStr += "(hlm-juic)"
         elif exe_type == 4:
             exeTypeStr += "(hlm-juif)"
+        elif exe_type == 5:
+            exeTypeStr += "(Z3r0n3 v1)"
+        elif exe_type == 6:
+            exeTypeStr += "(Z3r0n3 v2)"
         # Set the text of the .exe info label to the string.
         self.InfoExeType.setText(exeTypeStr)
         # Take the file path and cut it off before the last slash, and set that as the text of the .exe path label.
@@ -905,7 +948,7 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
     # Saves the .exe in memory to a location specified by the user.
     def saveExeAs(self):
         global exePath
-        exeTempPath = QFileDialog.getSaveFileName(self, "Save as...", getcwd() + "/Juiced.exe", "Executable files (*.exe)")[0]
+        exeTempPath = QFileDialog.getSaveFileName(self, "Save as...", self.lastPath + "/Juiced.exe", "Executable files (*.exe)")[0]
         if exeTempPath == "":
             return
         else:
@@ -1017,7 +1060,6 @@ class JEAboutDialog(QtWidgets.QDialog, Ui_JEAboutDialog):
     def __init__(self):
         super(JEAboutDialog, self).__init__()
         self.setupUi(self)
-
         self.setWindowIcon(juicedIcon)
 
 
@@ -1028,4 +1070,4 @@ if __name__ == "__main__":
     JECU = JECarUnlocksDialog()
     JEA = JEAboutDialog()
     JE.show()
-    sys.exit(app.exec())
+    sys.exit(app.exec_())

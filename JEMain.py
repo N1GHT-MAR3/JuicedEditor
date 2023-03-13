@@ -3,23 +3,15 @@
 ################################################################################
 ## Form generated from reading UI file 'JEMain.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.3.1
+## Created by: Qt User Interface Compiler version 5.15.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
-    QCursor, QFont, QFontDatabase, QGradient,
-    QIcon, QImage, QKeySequence, QLinearGradient,
-    QPainter, QPalette, QPixmap, QRadialGradient,
-    QTransform)
-from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QCheckBox, QComboBox,
-    QGroupBox, QLabel, QLineEdit, QMainWindow,
-    QMenu, QMenuBar, QPushButton, QSizePolicy,
-    QSpinBox, QStatusBar, QToolButton, QWidget)
+from PySide2.QtCore import *
+from PySide2.QtGui import *
+from PySide2.QtWidgets import *
+
 
 class Ui_JEMainWindow(object):
     def setupUi(self, JEMainWindow):
@@ -72,18 +64,18 @@ class Ui_JEMainWindow(object):
         self.InfoDecrypt.setGeometry(QRect(270, 30, 81, 20))
         self.InfoServerPatch = QLabel(self.Info)
         self.InfoServerPatch.setObjectName(u"InfoServerPatch")
-        self.InfoServerPatch.setGeometry(QRect(270, 50, 100, 20))
+        self.InfoServerPatch.setGeometry(QRect(270, 70, 100, 20))
         self.InfoServerPatchButton = QPushButton(self.Info)
         self.InfoServerPatchButton.setObjectName(u"InfoServerPatchButton")
         self.InfoServerPatchButton.setEnabled(False)
-        self.InfoServerPatchButton.setGeometry(QRect(400, 50, 90, 20))
+        self.InfoServerPatchButton.setGeometry(QRect(400, 70, 90, 20))
         self.InfoDecryptStatus = QLabel(self.Info)
         self.InfoDecryptStatus.setObjectName(u"InfoDecryptStatus")
         self.InfoDecryptStatus.setGeometry(QRect(370, 30, 20, 20))
         self.InfoDecryptStatus.setStyleSheet(u"color: blue;")
         self.InfoServerPatchStatus = QLabel(self.Info)
         self.InfoServerPatchStatus.setObjectName(u"InfoServerPatchStatus")
-        self.InfoServerPatchStatus.setGeometry(QRect(370, 50, 20, 20))
+        self.InfoServerPatchStatus.setGeometry(QRect(370, 70, 20, 20))
         self.InfoServerPatchStatus.setStyleSheet(u"color: red;")
         self.actionGitHub = QPushButton(self.Info)
         self.actionGitHub.setObjectName(u"actionGitHub")
@@ -99,6 +91,13 @@ class Ui_JEMainWindow(object):
         icon2.addFile(u"../../../Pictures/Icons/Discord_16px.png", QSize(), QIcon.Normal, QIcon.Off)
         self.actionDiscord.setIcon(icon2)
         self.actionDiscord.setFlat(True)
+        self.InfoVersion = QLabel(self.Info)
+        self.InfoVersion.setObjectName(u"InfoVersion")
+        self.InfoVersion.setGeometry(QRect(270, 50, 100, 20))
+        self.InfoVersionStatus = QLabel(self.Info)
+        self.InfoVersionStatus.setObjectName(u"InfoVersionStatus")
+        self.InfoVersionStatus.setGeometry(QRect(370, 50, 121, 20))
+        self.InfoVersionStatus.setStyleSheet(u"")
         self.expert = QGroupBox(self.centralwidget)
         self.expert.setObjectName(u"expert")
         self.expert.setGeometry(QRect(0, 360, 500, 60))
@@ -1275,7 +1274,7 @@ class Ui_JEMainWindow(object):
         self.menubar = QMenuBar(JEMainWindow)
         self.menubar.setObjectName(u"menubar")
         self.menubar.setEnabled(True)
-        self.menubar.setGeometry(QRect(0, 0, 500, 22))
+        self.menubar.setGeometry(QRect(0, 0, 500, 21))
         self.menuFile = QMenu(self.menubar)
         self.menuFile.setObjectName(u"menuFile")
         self.menuHelp = QMenu(self.menubar)
@@ -1406,6 +1405,11 @@ class Ui_JEMainWindow(object):
         self.InfoServerPatchStatus.setText(QCoreApplication.translate("JEMainWindow", u"No", None))
         self.actionGitHub.setText("")
         self.actionDiscord.setText("")
+#if QT_CONFIG(tooltip)
+        self.InfoVersion.setToolTip(QCoreApplication.translate("JEMainWindow", u"<html><head/><body><p>Which version of the game this .exe is.</p></body></html>", None))
+#endif // QT_CONFIG(tooltip)
+        self.InfoVersion.setText(QCoreApplication.translate("JEMainWindow", u"<html><head/><body><p>Version:<span style=\" font-size:11pt; font-weight:696; color:#0055ff; vertical-align:super;\">[?]</span></p></body></html>", None))
+        self.InfoVersionStatus.setText(QCoreApplication.translate("JEMainWindow", u"Unknown", None))
         self.expert.setTitle("")
         self.expertHeader.setText(QCoreApplication.translate("JEMainWindow", u"<html><head/><body><p><span style=\" font-weight:700;\">ONLY FOR EXPERTS</span></p></body></html>", None))
 #if QT_CONFIG(tooltip)
