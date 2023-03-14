@@ -1038,7 +1038,11 @@ class JECarUnlocksWindow(QtWidgets.QMainWindow, Ui_JECarUnlocksWindow):
         self.carUnlocksTable.cellWidget(50, 0).valueChanged.connect(self.updateRaces)
         self.carUnlocksTable.cellWidget(51, 0).valueChanged.connect(self.updateRaces)
 
+        # Call setDefaultOrder() when Options -> Set to default is selected.
         self.actionDefault.triggered.connect(self.setDefaultOrder)
+
+        # Call setAll() when Options -> Set all... is selected.
+        self.actionSetAll.triggered.connect(self.setAll)
 
     # Refresh text to determine how many races an unlock tier requires.
     def updateRaces(self):
@@ -1057,10 +1061,21 @@ class JECarUnlocksWindow(QtWidgets.QMainWindow, Ui_JECarUnlocksWindow):
         if self.sender().currentColumn() == 1:
             self.carUnlocksTable.setCurrentCell(self.sender().currentRow() + 1, 0)
     
+    # Resets the car unlock order to default as it is in the vanilla game.
     def setDefaultOrder(self):
         defaultOrder = [6, 10, 6, 11, 11, 6, 12, 8, 3, 7, 12, 1, 2, 1, 4, 9, 6, 9, 3, 5, 0, 6, 6, 10, 4, 3, 1, 8, 8, 9, 2, 7, 7, 11, 7, 5, 10, 0, 12, 5, 4, 8, 4, 4, 2, 5, 5, 10, 3, 0, 6, 2]
         for i in range(52):
             self.carUnlocksTable.cellWidget(i, 0).setValue(defaultOrder[i])
+
+    # Sets all car unlock tiers to a number specified by the user.
+    def setAll(self):
+        # Open an input dialog and retrieve an integer from the user between 0 and 715827882, starting @ 0 by default.
+        setAllValue = QtWidgets.QInputDialog().getInt(self, "Set all...", "Set all to: ", 0, 0, 715827882)
+        # QInputDialog returns an int and a boolean, the latter of which designates if OK was pressed or not. If that equates to true, the user pressed OK, so proceed to set all the unlock tiers.
+        if setAllValue[1]:
+            for i in range(52):
+                self.carUnlocksTable.cellWidget(i, 0).setValue(setAllValue[0])
+
 
 class JEAboutDialog(QtWidgets.QDialog, Ui_JEAboutDialog):
     def __init__(self):
