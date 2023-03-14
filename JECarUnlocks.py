@@ -13,24 +13,26 @@ from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 
 
-class Ui_JECarUnlocksDialog(object):
-    def setupUi(self, JECarUnlocksDialog):
-        if not JECarUnlocksDialog.objectName():
-            JECarUnlocksDialog.setObjectName(u"JECarUnlocksDialog")
-        JECarUnlocksDialog.setWindowModality(Qt.ApplicationModal)
-        JECarUnlocksDialog.resize(417, 670)
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(JECarUnlocksDialog.sizePolicy().hasHeightForWidth())
-        JECarUnlocksDialog.setSizePolicy(sizePolicy)
-        JECarUnlocksDialog.setMinimumSize(QSize(417, 670))
-        JECarUnlocksDialog.setMaximumSize(QSize(417, 670))
-        icon = QIcon()
-        icon.addFile(u"Juiced_32px.png", QSize(), QIcon.Normal, QIcon.Off)
-        JECarUnlocksDialog.setWindowIcon(icon)
-        JECarUnlocksDialog.setModal(True)
-        self.carUnlocksTable = QTableWidget(JECarUnlocksDialog)
+class Ui_JECarUnlocksWindow(object):
+    def setupUi(self, JECarUnlocksWindow):
+        if not JECarUnlocksWindow.objectName():
+            JECarUnlocksWindow.setObjectName(u"JECarUnlocksWindow")
+        JECarUnlocksWindow.resize(417, 691)
+        JECarUnlocksWindow.setMinimumSize(QSize(417, 691))
+        JECarUnlocksWindow.setMaximumSize(QSize(417, 691))
+        self.actionImport = QAction(JECarUnlocksWindow)
+        self.actionImport.setObjectName(u"actionImport")
+        self.actionExport = QAction(JECarUnlocksWindow)
+        self.actionExport.setObjectName(u"actionExport")
+        self.actionDefault = QAction(JECarUnlocksWindow)
+        self.actionDefault.setObjectName(u"actionDefault")
+        self.actionSetAll = QAction(JECarUnlocksWindow)
+        self.actionSetAll.setObjectName(u"actionSetAll")
+        self.actionRandomize = QAction(JECarUnlocksWindow)
+        self.actionRandomize.setObjectName(u"actionRandomize")
+        self.centralwidget = QWidget(JECarUnlocksWindow)
+        self.centralwidget.setObjectName(u"centralwidget")
+        self.carUnlocksTable = QTableWidget(self.centralwidget)
         if (self.carUnlocksTable.columnCount() < 2):
             self.carUnlocksTable.setColumnCount(2)
         __qtablewidgetitem = QTableWidgetItem()
@@ -147,6 +149,9 @@ class Ui_JECarUnlocksDialog(object):
         self.carUnlocksTable.setItem(0, 1, __qtablewidgetitem54)
         self.carUnlocksTable.setObjectName(u"carUnlocksTable")
         self.carUnlocksTable.setGeometry(QRect(10, 10, 397, 650))
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.carUnlocksTable.sizePolicy().hasHeightForWidth())
         self.carUnlocksTable.setSizePolicy(sizePolicy)
         self.carUnlocksTable.setMinimumSize(QSize(397, 650))
@@ -164,126 +169,150 @@ class Ui_JECarUnlocksDialog(object):
         self.carUnlocksTable.verticalHeader().setVisible(True)
         self.carUnlocksTable.verticalHeader().setDefaultSectionSize(24)
         self.carUnlocksTable.verticalHeader().setHighlightSections(False)
+        JECarUnlocksWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QMenuBar(JECarUnlocksWindow)
+        self.menubar.setObjectName(u"menubar")
+        self.menubar.setGeometry(QRect(0, 0, 417, 21))
+        self.menuFile = QMenu(self.menubar)
+        self.menuFile.setObjectName(u"menuFile")
+        self.menuOptions = QMenu(self.menubar)
+        self.menuOptions.setObjectName(u"menuOptions")
+        JECarUnlocksWindow.setMenuBar(self.menubar)
 
-        self.retranslateUi(JECarUnlocksDialog)
+        self.menubar.addAction(self.menuFile.menuAction())
+        self.menubar.addAction(self.menuOptions.menuAction())
+        self.menuFile.addAction(self.actionImport)
+        self.menuFile.addAction(self.actionExport)
+        self.menuOptions.addAction(self.actionDefault)
+        self.menuOptions.addAction(self.actionSetAll)
+        self.menuOptions.addAction(self.actionRandomize)
 
-        QMetaObject.connectSlotsByName(JECarUnlocksDialog)
+        self.retranslateUi(JECarUnlocksWindow)
+
+        QMetaObject.connectSlotsByName(JECarUnlocksWindow)
     # setupUi
 
-    def retranslateUi(self, JECarUnlocksDialog):
-        JECarUnlocksDialog.setWindowTitle(QCoreApplication.translate("JECarUnlocksDialog", u"Car Unlocks", None))
+    def retranslateUi(self, JECarUnlocksWindow):
+        JECarUnlocksWindow.setWindowTitle(QCoreApplication.translate("JECarUnlocksWindow", u"Car Unlocks", None))
+        self.actionImport.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Import...", None))
+        self.actionExport.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Export...", None))
+        self.actionDefault.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Set to default", None))
+        self.actionSetAll.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Set all...", None))
+        self.actionRandomize.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Randomize...", None))
         ___qtablewidgetitem = self.carUnlocksTable.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Tier", None));
+        ___qtablewidgetitem.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Tier", None));
         ___qtablewidgetitem1 = self.carUnlocksTable.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Unlock", None));
+        ___qtablewidgetitem1.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Unlock", None));
         ___qtablewidgetitem2 = self.carUnlocksTable.verticalHeaderItem(0)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Acura Integra Type R", None));
+        ___qtablewidgetitem2.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Acura Integra Type R", None));
         ___qtablewidgetitem3 = self.carUnlocksTable.verticalHeaderItem(1)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Acura NSX", None));
+        ___qtablewidgetitem3.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Acura NSX", None));
         ___qtablewidgetitem4 = self.carUnlocksTable.verticalHeaderItem(2)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Acura RSX Type-S", None));
+        ___qtablewidgetitem4.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Acura RSX Type-S", None));
         ___qtablewidgetitem5 = self.carUnlocksTable.verticalHeaderItem(3)
-        ___qtablewidgetitem5.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Chevrolet Camaro", None));
+        ___qtablewidgetitem5.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Chevrolet Camaro", None));
         ___qtablewidgetitem6 = self.carUnlocksTable.verticalHeaderItem(4)
-        ___qtablewidgetitem6.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Chevrolet Camaro Z28", None));
+        ___qtablewidgetitem6.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Chevrolet Camaro Z28", None));
         ___qtablewidgetitem7 = self.carUnlocksTable.verticalHeaderItem(5)
-        ___qtablewidgetitem7.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Chevrolet Corvette", None));
+        ___qtablewidgetitem7.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Chevrolet Corvette", None));
         ___qtablewidgetitem8 = self.carUnlocksTable.verticalHeaderItem(6)
-        ___qtablewidgetitem8.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Chevrolet Corvette Z06", None));
+        ___qtablewidgetitem8.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Chevrolet Corvette Z06", None));
         ___qtablewidgetitem9 = self.carUnlocksTable.verticalHeaderItem(7)
-        ___qtablewidgetitem9.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Dodge 1969 Charger R/T", None));
+        ___qtablewidgetitem9.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Dodge 1969 Charger R/T", None));
         ___qtablewidgetitem10 = self.carUnlocksTable.verticalHeaderItem(8)
-        ___qtablewidgetitem10.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Dodge Neon R/T", None));
+        ___qtablewidgetitem10.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Dodge Neon R/T", None));
         ___qtablewidgetitem11 = self.carUnlocksTable.verticalHeaderItem(9)
-        ___qtablewidgetitem11.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Dodge SRT-4", None));
+        ___qtablewidgetitem11.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Dodge SRT-4", None));
         ___qtablewidgetitem12 = self.carUnlocksTable.verticalHeaderItem(10)
-        ___qtablewidgetitem12.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Dodge Viper GTS", None));
+        ___qtablewidgetitem12.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Dodge Viper GTS", None));
         ___qtablewidgetitem13 = self.carUnlocksTable.verticalHeaderItem(11)
-        ___qtablewidgetitem13.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Fiat Punto 1.8 HGT", None));
+        ___qtablewidgetitem13.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Fiat Punto 1.8 HGT", None));
         ___qtablewidgetitem14 = self.carUnlocksTable.verticalHeaderItem(12)
-        ___qtablewidgetitem14.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Ford 2003 Focus SVT", None));
+        ___qtablewidgetitem14.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Ford 2003 Focus SVT", None));
         ___qtablewidgetitem15 = self.carUnlocksTable.verticalHeaderItem(13)
-        ___qtablewidgetitem15.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Ford 2004 Focus ZTS", None));
+        ___qtablewidgetitem15.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Ford 2004 Focus ZTS", None));
         ___qtablewidgetitem16 = self.carUnlocksTable.verticalHeaderItem(14)
-        ___qtablewidgetitem16.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Ford 67 Mustang", None));
+        ___qtablewidgetitem16.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Ford 67 Mustang", None));
         ___qtablewidgetitem17 = self.carUnlocksTable.verticalHeaderItem(15)
-        ___qtablewidgetitem17.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Ford Falcon XR8", None));
+        ___qtablewidgetitem17.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Ford Falcon XR8", None));
         ___qtablewidgetitem18 = self.carUnlocksTable.verticalHeaderItem(16)
-        ___qtablewidgetitem18.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Ford Mustang GT 99", None));
+        ___qtablewidgetitem18.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Ford Mustang GT 99", None));
         ___qtablewidgetitem19 = self.carUnlocksTable.verticalHeaderItem(17)
-        ___qtablewidgetitem19.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Holden Monaro CV8", None));
+        ___qtablewidgetitem19.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Holden Monaro CV8", None));
         ___qtablewidgetitem20 = self.carUnlocksTable.verticalHeaderItem(18)
-        ___qtablewidgetitem20.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Honda Civic DX", None));
+        ___qtablewidgetitem20.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Honda Civic DX", None));
         ___qtablewidgetitem21 = self.carUnlocksTable.verticalHeaderItem(19)
-        ___qtablewidgetitem21.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Honda Civic Type R", None));
+        ___qtablewidgetitem21.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Honda Civic Type R", None));
         ___qtablewidgetitem22 = self.carUnlocksTable.verticalHeaderItem(20)
-        ___qtablewidgetitem22.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Honda CR-X", None));
+        ___qtablewidgetitem22.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Honda CR-X", None));
         ___qtablewidgetitem23 = self.carUnlocksTable.verticalHeaderItem(21)
-        ___qtablewidgetitem23.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Honda Integra Type R '99", None));
+        ___qtablewidgetitem23.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Honda Integra Type R '99", None));
         ___qtablewidgetitem24 = self.carUnlocksTable.verticalHeaderItem(22)
-        ___qtablewidgetitem24.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Honda Integra Type R '02", None));
+        ___qtablewidgetitem24.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Honda Integra Type R '02", None));
         ___qtablewidgetitem25 = self.carUnlocksTable.verticalHeaderItem(23)
-        ___qtablewidgetitem25.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Honda NSX", None));
+        ___qtablewidgetitem25.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Honda NSX", None));
         ___qtablewidgetitem26 = self.carUnlocksTable.verticalHeaderItem(24)
-        ___qtablewidgetitem26.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Honda Prelude VT", None));
+        ___qtablewidgetitem26.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Honda Prelude VT", None));
         ___qtablewidgetitem27 = self.carUnlocksTable.verticalHeaderItem(25)
-        ___qtablewidgetitem27.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Honda S2000", None));
+        ___qtablewidgetitem27.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Honda S2000", None));
         ___qtablewidgetitem28 = self.carUnlocksTable.verticalHeaderItem(26)
-        ___qtablewidgetitem28.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Mazda MX-5", None));
+        ___qtablewidgetitem28.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Mazda MX-5", None));
         ___qtablewidgetitem29 = self.carUnlocksTable.verticalHeaderItem(27)
-        ___qtablewidgetitem29.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Mazda RX-7", None));
+        ___qtablewidgetitem29.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Mazda RX-7", None));
         ___qtablewidgetitem30 = self.carUnlocksTable.verticalHeaderItem(28)
-        ___qtablewidgetitem30.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Mazda RX-8", None));
+        ___qtablewidgetitem30.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Mazda RX-8", None));
         ___qtablewidgetitem31 = self.carUnlocksTable.verticalHeaderItem(29)
-        ___qtablewidgetitem31.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Mitsubishi 3000GT", None));
+        ___qtablewidgetitem31.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Mitsubishi 3000GT", None));
         ___qtablewidgetitem32 = self.carUnlocksTable.verticalHeaderItem(30)
-        ___qtablewidgetitem32.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Mitsubishi Eclipse GSX", None));
+        ___qtablewidgetitem32.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Mitsubishi Eclipse GSX", None));
         ___qtablewidgetitem33 = self.carUnlocksTable.verticalHeaderItem(31)
-        ___qtablewidgetitem33.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Mitsubishi FTO", None));
+        ___qtablewidgetitem33.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Mitsubishi FTO", None));
         ___qtablewidgetitem34 = self.carUnlocksTable.verticalHeaderItem(32)
-        ___qtablewidgetitem34.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Mitsubishi Lancer Evolution VI", None));
+        ___qtablewidgetitem34.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Mitsubishi Lancer Evolution VI", None));
         ___qtablewidgetitem35 = self.carUnlocksTable.verticalHeaderItem(33)
-        ___qtablewidgetitem35.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Mitsubishi Lancer Evolution VIII", None));
+        ___qtablewidgetitem35.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Mitsubishi Lancer Evolution VIII", None));
         ___qtablewidgetitem36 = self.carUnlocksTable.verticalHeaderItem(34)
-        ___qtablewidgetitem36.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Nissan 300Z", None));
+        ___qtablewidgetitem36.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Nissan 300Z", None));
         ___qtablewidgetitem37 = self.carUnlocksTable.verticalHeaderItem(35)
-        ___qtablewidgetitem37.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Nissan 350Z", None));
+        ___qtablewidgetitem37.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Nissan 350Z", None));
         ___qtablewidgetitem38 = self.carUnlocksTable.verticalHeaderItem(36)
-        ___qtablewidgetitem38.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Nissan Skyline GT-R", None));
+        ___qtablewidgetitem38.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Nissan Skyline GT-R", None));
         ___qtablewidgetitem39 = self.carUnlocksTable.verticalHeaderItem(37)
-        ___qtablewidgetitem39.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Peugeot 206 GTI", None));
+        ___qtablewidgetitem39.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Peugeot 206 GTI", None));
         ___qtablewidgetitem40 = self.carUnlocksTable.verticalHeaderItem(38)
-        ___qtablewidgetitem40.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Pontiac Firebird", None));
+        ___qtablewidgetitem40.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Pontiac Firebird", None));
         ___qtablewidgetitem41 = self.carUnlocksTable.verticalHeaderItem(39)
-        ___qtablewidgetitem41.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Renault Clio Sport 2.0 16V", None));
+        ___qtablewidgetitem41.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Renault Clio Sport 2.0 16V", None));
         ___qtablewidgetitem42 = self.carUnlocksTable.verticalHeaderItem(40)
-        ___qtablewidgetitem42.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Subaru Impreza 22B STi", None));
+        ___qtablewidgetitem42.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Subaru Impreza 22B STi", None));
         ___qtablewidgetitem43 = self.carUnlocksTable.verticalHeaderItem(41)
-        ___qtablewidgetitem43.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Subaru Impreza WRX STi", None));
+        ___qtablewidgetitem43.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Subaru Impreza WRX STi", None));
         ___qtablewidgetitem44 = self.carUnlocksTable.verticalHeaderItem(42)
-        ___qtablewidgetitem44.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Toyota Celica SS-I", None));
+        ___qtablewidgetitem44.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Toyota Celica SS-I", None));
         ___qtablewidgetitem45 = self.carUnlocksTable.verticalHeaderItem(43)
-        ___qtablewidgetitem45.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Toyota Celica SS-II", None));
+        ___qtablewidgetitem45.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Toyota Celica SS-II", None));
         ___qtablewidgetitem46 = self.carUnlocksTable.verticalHeaderItem(44)
-        ___qtablewidgetitem46.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Toyota Corolla 1.6", None));
+        ___qtablewidgetitem46.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Toyota Corolla 1.6", None));
         ___qtablewidgetitem47 = self.carUnlocksTable.verticalHeaderItem(45)
-        ___qtablewidgetitem47.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Toyota MR2", None));
+        ___qtablewidgetitem47.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Toyota MR2", None));
         ___qtablewidgetitem48 = self.carUnlocksTable.verticalHeaderItem(46)
-        ___qtablewidgetitem48.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Toyota MR-S", None));
+        ___qtablewidgetitem48.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Toyota MR-S", None));
         ___qtablewidgetitem49 = self.carUnlocksTable.verticalHeaderItem(47)
-        ___qtablewidgetitem49.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Toyota Supra", None));
+        ___qtablewidgetitem49.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Toyota Supra", None));
         ___qtablewidgetitem50 = self.carUnlocksTable.verticalHeaderItem(48)
-        ___qtablewidgetitem50.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Vauxhall Corsa Sri 1.8i 16V", None));
+        ___qtablewidgetitem50.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Vauxhall Corsa Sri 1.8i 16V", None));
         ___qtablewidgetitem51 = self.carUnlocksTable.verticalHeaderItem(49)
-        ___qtablewidgetitem51.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Volkswagen Beetle GLS 1.8T", None));
+        ___qtablewidgetitem51.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Volkswagen Beetle GLS 1.8T", None));
         ___qtablewidgetitem52 = self.carUnlocksTable.verticalHeaderItem(50)
-        ___qtablewidgetitem52.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Volkswagen Corrado VR6", None));
+        ___qtablewidgetitem52.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Volkswagen Corrado VR6", None));
         ___qtablewidgetitem53 = self.carUnlocksTable.verticalHeaderItem(51)
-        ___qtablewidgetitem53.setText(QCoreApplication.translate("JECarUnlocksDialog", u"Volkswagen Golf MkIV", None));
+        ___qtablewidgetitem53.setText(QCoreApplication.translate("JECarUnlocksWindow", u"Volkswagen Golf MkIV", None));
 
         __sortingEnabled = self.carUnlocksTable.isSortingEnabled()
         self.carUnlocksTable.setSortingEnabled(False)
         self.carUnlocksTable.setSortingEnabled(__sortingEnabled)
 
+        self.menuFile.setTitle(QCoreApplication.translate("JECarUnlocksWindow", u"File", None))
+        self.menuOptions.setTitle(QCoreApplication.translate("JECarUnlocksWindow", u"Options", None))
     # retranslateUi
 

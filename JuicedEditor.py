@@ -27,8 +27,8 @@ version = 8
 from PySide2 import QtCore, QtGui, QtWidgets
 # Imports the main window UI files from JEMain.py.
 from JEMain import Ui_JEMainWindow
-# Imports the car unlock dialog UI files from JECarUnlocks.py.
-from JECarUnlocks import Ui_JECarUnlocksDialog
+# Imports the car unlock window UI files from JECarUnlocks.py.
+from JECarUnlocks import Ui_JECarUnlocksWindow
 # Imports the about dialog UI files from JEAbout.py.
 from JEAbout import Ui_JEAboutDialog
 # Imports the file dialog seen when opening a file.
@@ -955,9 +955,9 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             exePath = exeTempPath
         self.saveExe()
 
-class JECarUnlocksDialog(QtWidgets.QDialog, Ui_JECarUnlocksDialog):
+class JECarUnlocksWindow(QtWidgets.QMainWindow, Ui_JECarUnlocksWindow):
     def __init__(self):
-        super(JECarUnlocksDialog, self).__init__()
+        super(JECarUnlocksWindow, self).__init__()
         self.setupUi(self)
 
         self.setWindowIcon(juicedIcon)
@@ -1037,7 +1037,8 @@ class JECarUnlocksDialog(QtWidgets.QDialog, Ui_JECarUnlocksDialog):
         self.carUnlocksTable.cellWidget(49, 0).valueChanged.connect(self.updateRaces)
         self.carUnlocksTable.cellWidget(50, 0).valueChanged.connect(self.updateRaces)
         self.carUnlocksTable.cellWidget(51, 0).valueChanged.connect(self.updateRaces)
-    
+
+        self.actionDefault.triggered.connect(self.setDefaultOrder)
 
     # Refresh text to determine how many races an unlock tier requires.
     def updateRaces(self):
@@ -1055,6 +1056,11 @@ class JECarUnlocksDialog(QtWidgets.QDialog, Ui_JECarUnlocksDialog):
     def fixTabOrder(self):
         if self.sender().currentColumn() == 1:
             self.carUnlocksTable.setCurrentCell(self.sender().currentRow() + 1, 0)
+    
+    def setDefaultOrder(self):
+        defaultOrder = [6, 10, 6, 11, 11, 6, 12, 8, 3, 7, 12, 1, 2, 1, 4, 9, 6, 9, 3, 5, 0, 6, 6, 10, 4, 3, 1, 8, 8, 9, 2, 7, 7, 11, 7, 5, 10, 0, 12, 5, 4, 8, 4, 4, 2, 5, 5, 10, 3, 0, 6, 2]
+        for i in range(52):
+            self.carUnlocksTable.cellWidget(i, 0).setValue(defaultOrder[i])
 
 class JEAboutDialog(QtWidgets.QDialog, Ui_JEAboutDialog):
     def __init__(self):
@@ -1067,7 +1073,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
     JE = JEMainWindow()
-    JECU = JECarUnlocksDialog()
+    JECU = JECarUnlocksWindow()
     JEA = JEAboutDialog()
     JE.show()
     sys.exit(app.exec_())
