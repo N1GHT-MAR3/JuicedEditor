@@ -311,21 +311,15 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         
         locCheats = exe_bytes.index(b"\xc8\x00\x00\x00\xC8\x00\x00\x00") + 8
 
-        # Allows the code bytes to be easily converted to numbers JE can understand.
-        def convCode(offset):
-            # Start at the cheat location defined from earlier and add whatever offset is given (pertaining to which character in which code is being read).
-            # . is an outlier character compared to the letters, being much earlier in the ASCII table. If the read character is a period, just set it to the corresponding combo box index (which is 26).
-            if exe_bytes[locCheats + offset] == 136:
-                return 26
-            else:
-                '''
-                To convert a Juiced code letter, subtract 90 (dec) to get its (dec) value in the ASCII table.
-                (ex. A in the ASCII table is 65 dec, 41 hex. In Juiced's cheat format, it is 155 dec, 9B hex.)
-                To convert to the indices of the combo boxes JE uses, subtract 65 (dec) more.
-                (ex. Since A in ASCII is 65 (dec), subtracting 65 will give you its index in the combo boxes (0).
-                Adding those two together (90 + 65), take whatever byte is read, and subtract 155 from it to get the correct index needed.
-                '''
-                return int(exe_bytes[locCheats + offset] - 155)
+        # Allows the code bytes to be easily converted to their corresponding letters in-game.
+        def convCode(index):
+            # Initialize a blank code string to concatenate letters onto.
+            code = ""
+            # Cheat codes in Juiced are always four characters long.
+            for i in range(4):
+                code += chr(exe_bytes[locCheats + (index * 4) + i] - 90)
+            # After reading the four characters, return the string compiled.
+            return code
         
         if decrypted:
             locDOSH = exe_bytes.index(b"\x2C\xC2\x04\x00\xC7\x47\x0C") + 7
@@ -342,40 +336,22 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         self.cheatALLCheckbox.setEnabled(True)
 
         # Since disabling a cheat is done by setting the first letter to 1 (139 dec, 8B hex), an inaccessible character, use that to determine whether or not the cheat is disabled
-        # If it's not disabled, set the corresponding letter boxes to the corret values
+        # If it's not disabled, set the corresponding line edit to the corresponding string and allow it to be edited
         if exe_bytes[locCheats] != 139:
-            self.cheatPINT1.setCurrentIndex(convCode(0))
-            self.cheatPINT2.setCurrentIndex(convCode(1))
-            self.cheatPINT3.setCurrentIndex(convCode(2))
-            self.cheatPINT4.setCurrentIndex(convCode(3))
-            self.cheatPINT1.setEnabled(True)
-            self.cheatPINT2.setEnabled(True)
-            self.cheatPINT3.setEnabled(True)
-            self.cheatPINT4.setEnabled(True)
+            self.cheatPINTCode.setText(convCode(0))
+            self.cheatPINTCode.setEnabled(True)
             self.cheatPINTCheckbox.setChecked(True)
         else:
-            # If the cheat is disabled, deny access to the combo boxes unless the cheat is enabled by the user
-            self.cheatPINT1.setEnabled(False)
-            self.cheatPINT2.setEnabled(False)
-            self.cheatPINT3.setEnabled(False)
-            self.cheatPINT4.setEnabled(False)
+            # If the cheat is disabled, deny access to the line edit unless the cheat is enabled by the user
+            self.cheatPINTCode.setEnabled(False)
             self.cheatPINTCheckbox.setChecked(False)
         
         if exe_bytes[locCheats + 4] != 139:
-            self.cheatDOSH1.setCurrentIndex(convCode(4))
-            self.cheatDOSH2.setCurrentIndex(convCode(5))
-            self.cheatDOSH3.setCurrentIndex(convCode(6))
-            self.cheatDOSH4.setCurrentIndex(convCode(7))
-            self.cheatDOSH1.setEnabled(True)
-            self.cheatDOSH2.setEnabled(True)
-            self.cheatDOSH3.setEnabled(True)
-            self.cheatDOSH4.setEnabled(True)
+            self.cheatDOSHCode.setText(convCode(1))
+            self.cheatDOSHCode.setEnabled(True)
             self.cheatDOSHCheckbox.setChecked(True)
         else:
-            self.cheatDOSH1.setEnabled(False)
-            self.cheatDOSH2.setEnabled(False)
-            self.cheatDOSH3.setEnabled(False)
-            self.cheatDOSH4.setEnabled(False)
+            self.cheatDOSHCode.setEnabled(False)
             self.cheatDOSHCheckbox.setChecked(False)
         if exe_bytes[locCheats + 4] != 139 and decrypted:
             self.cheatDOSHValue.setValue(int.from_bytes(exe_bytes[locDOSH:locDOSH + 4], "little"))
@@ -384,21 +360,12 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             self.cheatDOSHValue.setEnabled(False)
         
         if exe_bytes[locCheats + 8] != 139:
-            self.cheatRESP1.setCurrentIndex(convCode(8))
-            self.cheatRESP2.setCurrentIndex(convCode(9))
-            self.cheatRESP3.setCurrentIndex(convCode(10))
-            self.cheatRESP4.setCurrentIndex(convCode(11))
-            self.cheatRESP1.setEnabled(True)
-            self.cheatRESP2.setEnabled(True)
-            self.cheatRESP3.setEnabled(True)
-            self.cheatRESP4.setEnabled(True)
+            self.cheatRESPCode.setText(convCode(2))
+            self.cheatRESPCode.setEnabled(True)
             self.cheatRESPCheckbox.setChecked(True)
         else:
             # If the cheat is disabled, deny access to the combo boxes unless the cheat is enabled by the user
-            self.cheatRESP1.setEnabled(False)
-            self.cheatRESP2.setEnabled(False)
-            self.cheatRESP3.setEnabled(False)
-            self.cheatRESP4.setEnabled(False)
+            self.cheatRESPCode.setEnabled(False)
             self.cheatRESPCheckbox.setChecked(False)
         if exe_bytes[locCheats + 8] != 139 and decrypted:
             self.cheatRESPValue.setValue(int(struct.unpack('f', exe_bytes[locRESP:locRESP + 4])[0]))
@@ -407,93 +374,48 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             self.cheatRESPValue.setEnabled(False)
         
         if exe_bytes[locCheats + 12] != 139:
-            self.cheatCARS1.setCurrentIndex(convCode(12))
-            self.cheatCARS2.setCurrentIndex(convCode(13))
-            self.cheatCARS3.setCurrentIndex(convCode(14))
-            self.cheatCARS4.setCurrentIndex(convCode(15))
-            self.cheatCARS1.setEnabled(True)
-            self.cheatCARS2.setEnabled(True)
-            self.cheatCARS3.setEnabled(True)
-            self.cheatCARS4.setEnabled(True)
+            self.cheatCARSCode.setText(convCode(3))
+            self.cheatCARSCode.setEnabled(True)
             self.cheatCARSCheckbox.setChecked(True)
         else:
             # If the cheat is disabled, deny access to the combo boxes unless the cheat is enabled by the user
-            self.cheatCARS1.setEnabled(False)
-            self.cheatCARS2.setEnabled(False)
-            self.cheatCARS3.setEnabled(False)
-            self.cheatCARS4.setEnabled(False)
+            self.cheatCARSCode.setEnabled(False)
             self.cheatCARSCheckbox.setChecked(False)
         
         if exe_bytes[locCheats + 16] != 139:
-            self.cheatCREW1.setCurrentIndex(convCode(16))
-            self.cheatCREW2.setCurrentIndex(convCode(17))
-            self.cheatCREW3.setCurrentIndex(convCode(18))
-            self.cheatCREW4.setCurrentIndex(convCode(19))
-            self.cheatCREW1.setEnabled(True)
-            self.cheatCREW2.setEnabled(True)
-            self.cheatCREW3.setEnabled(True)
-            self.cheatCREW4.setEnabled(True)
+            self.cheatCREWCode.setText(convCode(4))
+            self.cheatCREWCode.setEnabled(True)
             self.cheatCREWCheckbox.setChecked(True)
         else:
             # If the cheat is disabled, deny access to the combo boxes unless the cheat is enabled by the user
-            self.cheatCREW1.setEnabled(False)
-            self.cheatCREW2.setEnabled(False)
-            self.cheatCREW3.setEnabled(False)
-            self.cheatCREW4.setEnabled(False)
+            self.cheatCREWCode.setEnabled(False)
             self.cheatCREWCheckbox.setChecked(False)
         
         if exe_bytes[locCheats + 20] != 139:
-            self.cheatCHAR1.setCurrentIndex(convCode(20))
-            self.cheatCHAR2.setCurrentIndex(convCode(21))
-            self.cheatCHAR3.setCurrentIndex(convCode(22))
-            self.cheatCHAR4.setCurrentIndex(convCode(23))
-            self.cheatCHAR1.setEnabled(True)
-            self.cheatCHAR2.setEnabled(True)
-            self.cheatCHAR3.setEnabled(True)
-            self.cheatCHAR4.setEnabled(True)
+            self.cheatCHARCode.setText(convCode(5))
+            self.cheatCHARCode.setEnabled(True)
             self.cheatCHARCheckbox.setChecked(True)
         else:
             # If the cheat is disabled, deny access to the combo boxes unless the cheat is enabled by the user
-            self.cheatCHAR1.setEnabled(False)
-            self.cheatCHAR2.setEnabled(False)
-            self.cheatCHAR3.setEnabled(False)
-            self.cheatCHAR4.setEnabled(False)
+            self.cheatCHARCode.setEnabled(False)
             self.cheatCHARCheckbox.setChecked(False)
         
         if exe_bytes[locCheats + 24] != 139:
-            self.cheatWIN1.setCurrentIndex(convCode(24))
-            self.cheatWIN2.setCurrentIndex(convCode(25))
-            self.cheatWIN3.setCurrentIndex(convCode(26))
-            self.cheatWIN4.setCurrentIndex(convCode(27))
-            self.cheatWIN1.setEnabled(True)
-            self.cheatWIN2.setEnabled(True)
-            self.cheatWIN3.setEnabled(True)
-            self.cheatWIN4.setEnabled(True)
+            self.cheatWINCode.setText(convCode(6))
+            self.cheatWINCode.setEnabled(True)
             self.cheatWINCheckbox.setChecked(True)
         else:
             # If the cheat is disabled, deny access to the combo boxes unless the cheat is enabled by the user
-            self.cheatWIN1.setEnabled(False)
-            self.cheatWIN2.setEnabled(False)
-            self.cheatWIN3.setEnabled(False)
-            self.cheatWIN4.setEnabled(False)
+            self.cheatWINCode.setEnabled(False)
             self.cheatWINCheckbox.setChecked(False)
         
         if exe_bytes[locCheats + 28] != 139:
-            self.cheatALL1.setCurrentIndex(convCode(28))
-            self.cheatALL2.setCurrentIndex(convCode(29))
-            self.cheatALL3.setCurrentIndex(convCode(30))
-            self.cheatALL4.setCurrentIndex(convCode(31))
-            self.cheatALL1.setEnabled(True)
-            self.cheatALL2.setEnabled(True)
-            self.cheatALL3.setEnabled(True)
-            self.cheatALL4.setEnabled(True)
+            self.cheatALLCode.setText(convCode(7))
+            self.cheatALLCode.setEnabled(True)
             self.cheatALLCheckbox.setChecked(True)
         else:
             # If the cheat is disabled, deny access to the combo boxes unless the cheat is enabled by the user
-            self.cheatALL1.setEnabled(False)
-            self.cheatALL2.setEnabled(False)
-            self.cheatALL3.setEnabled(False)
-            self.cheatALL4.setEnabled(False)
+            self.cheatALLCode.setEnabled(False)
             self.cheatALLCheckbox.setChecked(False)
         
         try:
@@ -655,150 +577,102 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
     # Enables or disables the letter combo boxes depending on whether or not the corresponding check box is checked.
     def togglePINT(self):
         if self.cheatPINTCheckbox.isChecked():
-            self.cheatPINT1.setEnabled(True)
-            self.cheatPINT2.setEnabled(True)
-            self.cheatPINT3.setEnabled(True)
-            self.cheatPINT4.setEnabled(True)
+            self.cheatPINTCode.setEnabled(True)
         else:
-            self.cheatPINT1.setEnabled(False)
-            self.cheatPINT2.setEnabled(False)
-            self.cheatPINT3.setEnabled(False)
-            self.cheatPINT4.setEnabled(False)
+            self.cheatPINTCode.setEnabled(False)
     
     def toggleDOSH(self):
         if self.cheatDOSHCheckbox.isChecked():
-            self.cheatDOSH1.setEnabled(True)
-            self.cheatDOSH2.setEnabled(True)
-            self.cheatDOSH3.setEnabled(True)
-            self.cheatDOSH4.setEnabled(True)
+            self.cheatDOSHCode.setEnabled(True)
             if decrypted:
                 self.cheatDOSHValue.setEnabled(True)
         else:
-            self.cheatDOSH1.setEnabled(False)
-            self.cheatDOSH2.setEnabled(False)
-            self.cheatDOSH3.setEnabled(False)
-            self.cheatDOSH4.setEnabled(False)
+            self.cheatDOSHCode.setEnabled(False)
             self.cheatDOSHValue.setEnabled(False)
     
     def toggleRESP(self):
         if self.cheatRESPCheckbox.isChecked():
-            self.cheatRESP1.setEnabled(True)
-            self.cheatRESP2.setEnabled(True)
-            self.cheatRESP3.setEnabled(True)
-            self.cheatRESP4.setEnabled(True)
+            self.cheatRESPCode.setEnabled(True)
             if decrypted:
                 self.cheatRESPValue.setEnabled(True)
         else:
-            self.cheatRESP1.setEnabled(False)
-            self.cheatRESP2.setEnabled(False)
-            self.cheatRESP3.setEnabled(False)
-            self.cheatRESP4.setEnabled(False)
+            self.cheatRESPCode.setEnabled(False)
             self.cheatRESPValue.setEnabled(False)
     
     def toggleCARS(self):
         if self.cheatCARSCheckbox.isChecked():
-            self.cheatCARS1.setEnabled(True)
-            self.cheatCARS2.setEnabled(True)
-            self.cheatCARS3.setEnabled(True)
-            self.cheatCARS4.setEnabled(True)
+            self.cheatCARSCode.setEnabled(True)
         else:
-            self.cheatCARS1.setEnabled(False)
-            self.cheatCARS2.setEnabled(False)
-            self.cheatCARS3.setEnabled(False)
-            self.cheatCARS4.setEnabled(False)
+            self.cheatCARSCode.setEnabled(False)
     
     def toggleCREW(self):
         if self.cheatCREWCheckbox.isChecked():
-            self.cheatCREW1.setEnabled(True)
-            self.cheatCREW2.setEnabled(True)
-            self.cheatCREW3.setEnabled(True)
-            self.cheatCREW4.setEnabled(True)
+            self.cheatCREWCode.setEnabled(True)
         else:
-            self.cheatCREW1.setEnabled(False)
-            self.cheatCREW2.setEnabled(False)
-            self.cheatCREW3.setEnabled(False)
-            self.cheatCREW4.setEnabled(False)
+            self.cheatCREWCode.setEnabled(False)
     
     def toggleCHAR(self):
         if self.cheatCHARCheckbox.isChecked():
-            self.cheatCHAR1.setEnabled(True)
-            self.cheatCHAR2.setEnabled(True)
-            self.cheatCHAR3.setEnabled(True)
-            self.cheatCHAR4.setEnabled(True)
+            self.cheatCHARCode.setEnabled(True)
         else:
-            self.cheatCHAR1.setEnabled(False)
-            self.cheatCHAR2.setEnabled(False)
-            self.cheatCHAR3.setEnabled(False)
-            self.cheatCHAR4.setEnabled(False)
+            self.cheatCHARCode.setEnabled(False)
     
     def toggleWIN(self):
         if self.cheatWINCheckbox.isChecked():
-            self.cheatWIN1.setEnabled(True)
-            self.cheatWIN2.setEnabled(True)
-            self.cheatWIN3.setEnabled(True)
-            self.cheatWIN4.setEnabled(True)
+            self.cheatWINCode.setEnabled(True)
         else:
-            self.cheatWIN1.setEnabled(False)
-            self.cheatWIN2.setEnabled(False)
-            self.cheatWIN3.setEnabled(False)
-            self.cheatWIN4.setEnabled(False)
+            self.cheatWINCode.setEnabled(False)
     
     def toggleALL(self):
         if self.cheatALLCheckbox.isChecked():
-            self.cheatALL1.setEnabled(True)
-            self.cheatALL2.setEnabled(True)
-            self.cheatALL3.setEnabled(True)
-            self.cheatALL4.setEnabled(True)
+            self.cheatALLCode.setEnabled(True)
         else:
-            self.cheatALL1.setEnabled(False)
-            self.cheatALL2.setEnabled(False)
-            self.cheatALL3.setEnabled(False)
-            self.cheatALL4.setEnabled(False)
+            self.cheatALLCode.setEnabled(False)
     
     def showCarUnlocks(self):
         JECU.show()
     
     # Reverses the operation done in convCode.
-    def convCodeBack(self, index):
-        if index == 26:
-            return 136
-        else:
-            return index + 155
+    def convCodeBack(self, text):
+        codeBytes = []
+        for i in range(4):
+            codeBytes.append(ord(text[i]) + 90)
+        return bytes(codeBytes)
     
     # Check if any cheats use duplicate codes.
     def checkCheats(self):
         # Initialize a list of the cheat codes to patch in.
         newCheats = []
-        # Check each cheat to see if it's enabled. If it is, pack its code into a tuple and add it to the list.
+        # Check each cheat to see if it's enabled. If it is, add it to the list.
         if self.cheatPINTCheckbox.isChecked():
-            newCheats.append((self.cheatPINT1.currentIndex(), self.cheatPINT2.currentIndex(), self.cheatPINT3.currentIndex(), self.cheatPINT4.currentIndex()))
+            newCheats.append(self.cheatPINTCode.text())
         if self.cheatDOSHCheckbox.isChecked():
-            newCheats.append((self.cheatDOSH1.currentIndex(), self.cheatDOSH2.currentIndex(), self.cheatDOSH3.currentIndex(), self.cheatDOSH4.currentIndex()))
+            newCheats.append(self.cheatDOSHCode.text())
         if self.cheatRESPCheckbox.isChecked():
-            newCheats.append((self.cheatRESP1.currentIndex(), self.cheatRESP2.currentIndex(), self.cheatRESP3.currentIndex(), self.cheatRESP4.currentIndex()))
+            newCheats.append(self.cheatRESPCode.text())
         if self.cheatCARSCheckbox.isChecked():
-            newCheats.append((self.cheatCARS1.currentIndex(), self.cheatCARS2.currentIndex(), self.cheatCARS3.currentIndex(), self.cheatCARS4.currentIndex()))
+            newCheats.append(self.cheatCARSCode.text())
         if self.cheatCREWCheckbox.isChecked():
-            newCheats.append((self.cheatCREW1.currentIndex(), self.cheatCREW2.currentIndex(), self.cheatCREW3.currentIndex(), self.cheatCREW4.currentIndex()))
+            newCheats.append(self.cheatCREWCode.text())
         if self.cheatCHARCheckbox.isChecked():
-            newCheats.append((self.cheatCHAR1.currentIndex(), self.cheatCHAR2.currentIndex(), self.cheatCHAR3.currentIndex(), self.cheatCHAR4.currentIndex()))
+            newCheats.append(self.cheatCHARCode.text())
         if self.cheatWINCheckbox.isChecked():
-            newCheats.append((self.cheatWIN1.currentIndex(), self.cheatWIN2.currentIndex(), self.cheatWIN3.currentIndex(), self.cheatWIN4.currentIndex()))
+            newCheats.append(self.cheatWINCode.text())
         if self.cheatALLCheckbox.isChecked():
-            newCheats.append((self.cheatALL1.currentIndex(), self.cheatALL2.currentIndex(), self.cheatALL3.currentIndex(), self.cheatALL4.currentIndex()))
+            newCheats.append(self.cheatALLCode.text())
         
         # If there's more than one cheat enabled...
         if len(newCheats) > 1:
             # Run one less check than there are cheats...
             for i in range(len(newCheats) - 1):
-                # ...to see if there are any tuples (codes) that occur more than once in the list.
+                # ...to see if there are any codes that occur more than once in the list.
                 if newCheats.count(newCheats[i]) > 1:
                     # If there are any, show the user a warning message about the duplicate codes and ask them if they want to save anyways.
                     question = QtWidgets.QMessageBox.warning(self, "Warning", "You have multiple cheats with the same code. Only the first cheat using a given code will be triggered in-game. Do you wish to continue?", QtWidgets.QMessageBox.StandardButton.Yes|QtWidgets.QMessageBox.StandardButton.No)
                     # If they select yes (represented by int 16384), break the loop (since they've indicated they're okay with dupe codes) and return True to indicate that the check is good.
                     if question == 16384:
                         return True
-                    # If they select no (represented by int 16384), break the loop and return False to indicate that the check did not pass.
+                    # If they select no (represented by int 65536), break the loop and return False to indicate that the check did not pass.
                     elif question == 65536:
                         return False
         # If the check completes fully without any issues, return True.
@@ -813,87 +687,49 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
             return
         # Check to see that the PINT cheat is enabled.
         if self.cheatPINTCheckbox.isChecked():
-            # If it is, convert each of the letters to their corresponding number that Juiced's codes use
-            exe_bytes[locCheats] = self.convCodeBack(self.cheatPINT1.currentIndex())
-            exe_bytes[locCheats + 1] = self.convCodeBack(self.cheatPINT2.currentIndex())
-            exe_bytes[locCheats + 2] = self.convCodeBack(self.cheatPINT3.currentIndex())
-            exe_bytes[locCheats + 3] = self.convCodeBack(self.cheatPINT4.currentIndex())
+            # If it is, convert the input code back
+            exe_bytes[locCheats:locCheats + 4] = self.convCodeBack(self.cheatPINTCode.text())
         else:
-            # If it's set to be disabled, just do what Juiced does and set the first letter to 1, which is normally impossible to input
+            # If it's set to be disabled, just do what Juiced does and set the first character to 1, which is normally impossible to input
             exe_bytes[locCheats] = 139
         
         if self.cheatDOSHCheckbox.isChecked():
-            # If it is, convert each of the letters to their corresponding number that Juiced's codes use
-            exe_bytes[locCheats + 4] = self.convCodeBack(self.cheatDOSH1.currentIndex())
-            exe_bytes[locCheats + 5] = self.convCodeBack(self.cheatDOSH2.currentIndex())
-            exe_bytes[locCheats + 6] = self.convCodeBack(self.cheatDOSH3.currentIndex())
-            exe_bytes[locCheats + 7] = self.convCodeBack(self.cheatDOSH4.currentIndex())
+            exe_bytes[locCheats + 4:locCheats + 8] = self.convCodeBack(self.cheatDOSHCode.text())
             if decrypted:
                 exe_bytes[locDOSH:locDOSH + 4] = int.to_bytes(self.cheatDOSHValue.value(), 4, "little")
         else:
-            # If it's set to be disabled, just do what Juiced does and set the first letter to 1, which is normally impossible to input
             exe_bytes[locCheats + 4] = 139
         
         if self.cheatRESPCheckbox.isChecked():
-            # If it is, convert each of the letters to their corresponding number that Juiced's codes use
-            exe_bytes[locCheats + 8] = self.convCodeBack(self.cheatRESP1.currentIndex())
-            exe_bytes[locCheats + 9] = self.convCodeBack(self.cheatRESP2.currentIndex())
-            exe_bytes[locCheats + 10] = self.convCodeBack(self.cheatRESP3.currentIndex())
-            exe_bytes[locCheats + 11] = self.convCodeBack(self.cheatRESP4.currentIndex())
+            exe_bytes[locCheats + 8:locCheats + 12] = self.convCodeBack(self.cheatRESPCode.text())
             if decrypted:
                 exe_bytes[locRESP:locRESP + 4] = struct.pack('f', float(self.cheatRESPValue.value()))
         else:
-            # If it's set to be disabled, just do what Juiced does and set the first letter to 1, which is normally impossible to input
             exe_bytes[locCheats + 8] = 139
         
         if self.cheatCARSCheckbox.isChecked():
-            # If it is, convert each of the letters to their corresponding number that Juiced's codes use
-            exe_bytes[locCheats + 12] = self.convCodeBack(self.cheatCARS1.currentIndex())
-            exe_bytes[locCheats + 13] = self.convCodeBack(self.cheatCARS2.currentIndex())
-            exe_bytes[locCheats + 14] = self.convCodeBack(self.cheatCARS3.currentIndex())
-            exe_bytes[locCheats + 15] = self.convCodeBack(self.cheatCARS4.currentIndex())
+            exe_bytes[locCheats + 12:locCheats + 16] = self.convCodeBack(self.cheatCARSCode.text())
         else:
-            # If it's set to be disabled, just do what Juiced does and set the first letter to 1, which is normally impossible to input
             exe_bytes[locCheats + 12] = 139
         
         if self.cheatCREWCheckbox.isChecked():
-            # If it is, convert each of the letters to their corresponding number that Juiced's codes use
-            exe_bytes[locCheats + 16] = self.convCodeBack(self.cheatCREW1.currentIndex())
-            exe_bytes[locCheats + 17] = self.convCodeBack(self.cheatCREW2.currentIndex())
-            exe_bytes[locCheats + 18] = self.convCodeBack(self.cheatCREW3.currentIndex())
-            exe_bytes[locCheats + 19] = self.convCodeBack(self.cheatCREW4.currentIndex())
+            exe_bytes[locCheats + 16:locCheats + 20] = self.convCodeBack(self.cheatCREWCode.text())
         else:
-            # If it's set to be disabled, just do what Juiced does and set the first letter to 1, which is normally impossible to input
             exe_bytes[locCheats + 16] = 139
         
         if self.cheatCHARCheckbox.isChecked():
-            # If it is, convert each of the letters to their corresponding number that Juiced's codes use
-            exe_bytes[locCheats + 20] = self.convCodeBack(self.cheatCHAR1.currentIndex())
-            exe_bytes[locCheats + 21] = self.convCodeBack(self.cheatCHAR2.currentIndex())
-            exe_bytes[locCheats + 22] = self.convCodeBack(self.cheatCHAR3.currentIndex())
-            exe_bytes[locCheats + 23] = self.convCodeBack(self.cheatCHAR4.currentIndex())
+            exe_bytes[locCheats + 20:locCheats + 24] = self.convCodeBack(self.cheatCHARCode.text())
         else:
-            # If it's set to be disabled, just do what Juiced does and set the first letter to 1, which is normally impossible to input
             exe_bytes[locCheats + 20] = 139
         
         if self.cheatWINCheckbox.isChecked():
-            # If it is, convert each of the letters to their corresponding number that Juiced's codes use
-            exe_bytes[locCheats + 24] = self.convCodeBack(self.cheatWIN1.currentIndex())
-            exe_bytes[locCheats + 25] = self.convCodeBack(self.cheatWIN2.currentIndex())
-            exe_bytes[locCheats + 26] = self.convCodeBack(self.cheatWIN3.currentIndex())
-            exe_bytes[locCheats + 27] = self.convCodeBack(self.cheatWIN4.currentIndex())
+            exe_bytes[locCheats + 24:locCheats + 28] = self.convCodeBack(self.cheatWINCode.text())
         else:
-            # If it's set to be disabled, just do what Juiced does and set the first letter to 1, which is normally impossible to input
             exe_bytes[locCheats + 24] = 139
         
         if self.cheatALLCheckbox.isChecked():
-            # If it is, convert each of the letters to their corresponding number that Juiced's codes use
-            exe_bytes[locCheats + 28] = self.convCodeBack(self.cheatALL1.currentIndex())
-            exe_bytes[locCheats + 29] = self.convCodeBack(self.cheatALL2.currentIndex())
-            exe_bytes[locCheats + 30] = self.convCodeBack(self.cheatALL3.currentIndex())
-            exe_bytes[locCheats + 31] = self.convCodeBack(self.cheatALL4.currentIndex())
+            exe_bytes[locCheats + 28:locCheats + 32] = self.convCodeBack(self.cheatALLCode.text())
         else:
-            # If it's set to be disabled, just do what Juiced does and set the first letter to 1, which is normally impossible to input
             exe_bytes[locCheats + 28] = 139
         
         # Rewrite the car unlocks based on what's set in the respective menu.
