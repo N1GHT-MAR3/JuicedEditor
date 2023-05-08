@@ -41,6 +41,8 @@ import struct
 import webbrowser
 # Imports functions allowing the editor to read from web links.
 import urllib.request
+# Imports functions used to import and export settings.
+import json
 
 
 # Sets up the main window UI.
@@ -880,6 +882,12 @@ class JECarUnlocksWindow(QtWidgets.QMainWindow, Ui_JECarUnlocksWindow):
         # Call setAll() when Options -> Set all... is selected.
         self.actionSetAll.triggered.connect(self.setAll)
 
+        # Call jsonExport() when File -> Export... is selected.
+        self.actionExport.triggered.connect(self.jsonExport)
+
+        # Call jsonImport() when File -> Import... is selected.
+        self.actionImport.triggered.connect(self.jsonImport)
+
     # Refresh text to determine how many races an unlock tier requires.
     def updateRaces(self):
         # Since children in a table widget don't know their index in said table, use this workaround to find that out.
@@ -911,6 +919,55 @@ class JECarUnlocksWindow(QtWidgets.QMainWindow, Ui_JECarUnlocksWindow):
         if setAllValue[1]:
             for i in range(52):
                 self.carUnlocksTable.cellWidget(i, 0).setValue(setAllValue[0])
+    
+    # Export the current car unlock settings to a .json file.
+    def jsonExport(self):
+        # Generate a list to store each value in.
+        currentUnlocks = []
+        # Add the value for each of the 52 cars to the list.
+        for i in range(52):
+            currentUnlocks.append(self.carUnlocksTable.cellWidget(i, 0).value())
+        # Ask the user where they want to save the .json.
+        try:
+            jsonPath = QFileDialog.getSaveFileName(self, "Export...", getcwd(), "JSON files (*.json)")[0]
+            # Open the file at the specified path for text writing.
+            f = open(jsonPath, "w")
+            # Write the list in .json format to the specified file, after a string used for checking if the .json is actually intended for JE.
+            # Add an indent to each line to make it easier to read when opened manually.
+            f.write(json.dumps([["Juiced Editor Car Unlocks"], currentUnlocks], indent = 1))
+            # Close the file.
+            f.close()
+            # Check and make sure the file exists.
+            if path.exists(jsonPath):
+                # If it does, let the user know the file was written successfully.
+                QtWidgets.QMessageBox.information(self, "Success", "Car unlocks exported to " + jsonPath + ".")
+        # FileNotFoundError happens when the user cancels the operation.
+        except FileNotFoundError:
+            # In this case, just proceed as normal.
+            pass
+
+    # Import car unlock settings from an exported .json into the editor.
+    def jsonImport(self):
+        # Ask the user what file to open.
+        try:
+            f = open(QFileDialog.getOpenFileName(self, "Import...", getcwd(), "JSON files (*.json)")[0], "r")
+            # Load the list into memory from the specified file.
+            importedJson = json.load(f)
+            # Close the file.
+            f.close()
+            # Check the first index of the .json and look for a specific string to confirm the .json is formatted for Juiced Editor.
+            if importedJson[0][0] == "Juiced Editor Car Unlocks":
+                # If it is, read each of the 52 values and assign them to their respective cars.
+                for i in range(52):
+                    self.carUnlocksTable.cellWidget(i, 0).setValue(importedJson[1][i])
+            else:
+                QtWidgets.QMessageBox.critical(self, "Error", "This does not appear to be a valid Juiced Editor JSON file.")
+        # FileNotFoundError happens when the user cancels the operation.
+        except FileNotFoundError:
+            # In this case, just proceed as normal.
+            pass
+        
+        
 
 
 class JEAboutDialog(QtWidgets.QDialog, Ui_JEAboutDialog):
