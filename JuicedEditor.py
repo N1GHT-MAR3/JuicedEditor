@@ -170,6 +170,7 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         global locRESP
         global locCarUnlocks
         global carUnlocks
+        global locSaveDir
         global locModels
         global indexDict
 
@@ -490,7 +491,11 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
                 JECU.carUnlocksTable.cellWidget(i, 1).setText("Start")
             else:
                 JECU.carUnlocksTable.cellWidget(i, 1).setText(str(JECU.carUnlocksTable.cellWidget(i, 0).value() * 3) + " races")
-        
+
+        # Search for the 4-character save directory string, fill in the field w/ whatever's there, and unlock the field for editing.
+        locSaveDir = exe_bytes.index(b"\x53\x00\x00\x00\x00\x80\x46") + 7
+        self.saveDirValue.setText(exe_bytes[locSaveDir:locSaveDir + 4].decode())
+        self.saveDirValue.setEnabled(True)
         
         # Find the location in the .exe where carmodels.dat would be defined using a consistent byte string that comes before it in all 4 .exes.
         locModels = exe_bytes.index(b"\x69\x00\x00\x4A\x00\x75\x00\x69\x00\x63\x00\x65\x00\x64\x00\x00\x00\x00\x00") + 19
@@ -737,6 +742,10 @@ class JEMainWindow(QtWidgets.QMainWindow, Ui_JEMainWindow):
         # Rewrite the car unlocks based on what's set in the respective menu.
         for i in range(52):
             exe_bytes[locCarUnlocks + (indexDict[i] * 4):locCarUnlocks + (indexDict[i] * 4) + 4] = int.to_bytes(JECU.carUnlocksTable.cellWidget(i, 0).value(), 4, "little")
+        
+        # Search for the 4-character save directory string, fill in the field w/ whatever's there, and unlock the field for editing.
+        #locSaveDir = exe_bytes.index(b"\x53\x00\x00\x00\x00\x80\x46") + 7
+        exe_bytes[locSaveDir:locSaveDir + 4] = bytes(self.saveDirValue.text(), "utf-8")
         
         if self.expertDummyCheckbox.isChecked():
             exe_bytes[locModels:locModels + 13] = b"dummyfile.dat"

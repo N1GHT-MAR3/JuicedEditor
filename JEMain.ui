@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>460</height>
+    <height>500</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>500</width>
-    <height>460</height>
+    <height>500</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -275,7 +275,7 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>360</y>
+      <y>380</y>
       <width>500</width>
       <height>60</height>
      </rect>
@@ -299,7 +299,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;ONLY FOR EXPERTS&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:696;&quot;&gt;Advanced&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QLabel" name="expertDummy">
@@ -944,7 +944,7 @@
       <x>0</x>
       <y>300</y>
       <width>500</width>
-      <height>60</height>
+      <height>80</height>
      </rect>
     </property>
     <property name="title">
@@ -986,6 +986,49 @@
      </property>
      <property name="text">
       <string>Car Unlocks...</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="saveDirValue">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>160</x>
+       <y>50</y>
+       <width>120</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Courier</family>
+      </font>
+     </property>
+     <property name="text">
+      <string>SAVE</string>
+     </property>
+     <property name="maxLength">
+      <number>4</number>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignJustify|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+    <widget class="QLabel" name="saveDirLabel">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>155</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Activates PINT, DOSH, RESP, CARS, and CREW.&lt;/p&gt;&lt;p&gt;Does not activate CHAR or WIN.&lt;/p&gt;&lt;p&gt;Default code is ALL.&lt;/p&gt;&lt;p&gt;Disabled by default.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Save data directory&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </widget>
